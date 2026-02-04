@@ -2,7 +2,7 @@
 
 import { Link, usePathname } from '@/i18n/routing'
 import { useTranslations, useLocale } from 'next-intl'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Menu, X, Globe } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
@@ -11,6 +11,15 @@ export function Header() {
   const locale = useLocale()
   const pathname = usePathname()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   const navLinks = [
     { href: '/', label: t('home') },
@@ -22,72 +31,105 @@ export function Header() {
   const otherLocale = locale === 'nl' ? 'en' : 'nl'
 
   return (
-    <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-neutral-100">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link href="/" className="text-2xl font-bold tracking-tight text-neutral-900">
-            CARCITY
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled 
+          ? 'glass py-4' 
+          : 'bg-transparent py-6'
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
+        {/* Logo */}
+        <Link 
+          href="/" 
+          className="text-2xl font-bold tracking-tight text-white"
+          data-testid="logo"
+        >
+          CARCITY
+        </Link>
+
+        {/* Desktop Navigation */}
+        <nav className="hidden md:flex items-center gap-8">
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={`text-sm font-medium transition-colors hover:text-white ${
+                pathname === link.href ? 'text-white' : 'text-zinc-400'
+              }`}
+              data-testid={`nav-${link.href.replace('/', '') || 'home'}`}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </nav>
+
+        {/* Language Switch + Browse Button + Mobile Menu */}
+        <div className="hidden md:flex items-center gap-4">
+          <Link
+            href={pathname}
+            locale={otherLocale}
+            className="flex items-center gap-1 text-sm font-medium text-zinc-400 hover:text-white transition-colors"
+            data-testid="language-switch"
+          >
+            <Globe className="w-4 h-4" />
+            <span className="uppercase">{otherLocale}</span>
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
+          <Link href="/cars">
+            <Button 
+              className="rounded-full px-6 bg-white text-black hover:bg-zinc-200"
+              data-testid="browse-cars-btn"
+            >
+              {t('inventory')}
+            </Button>
+          </Link>
+        </div>
+
+        {/* Mobile Menu Button */}
+        <button
+          className="md:hidden text-white p-2"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label="Toggle menu"
+          data-testid="mobile-menu-btn"
+        >
+          {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        </button>
+      </div>
+
+      {/* Mobile Navigation */}
+      {mobileMenuOpen && (
+        <div className="md:hidden glass mt-4 mx-6 rounded-xl p-6 animate-fade-in">
+          <nav className="flex flex-col gap-4">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`text-sm font-medium transition-colors hover:text-red-600 ${
-                  pathname === link.href ? 'text-red-600' : 'text-neutral-600'
+                className={`py-2 text-sm font-medium transition-colors ${
+                  pathname === link.href ? 'text-white' : 'text-zinc-400'
                 }`}
+                onClick={() => setMobileMenuOpen(false)}
               >
                 {link.label}
               </Link>
             ))}
-          </nav>
-
-          {/* Language Switch + Mobile Menu */}
-          <div className="flex items-center gap-4">
             <Link
               href={pathname}
               locale={otherLocale}
-              className="flex items-center gap-1 text-sm font-medium text-neutral-600 hover:text-neutral-900 transition-colors"
+              className="flex items-center gap-1 py-2 text-sm font-medium text-zinc-400 hover:text-white transition-colors"
+              onClick={() => setMobileMenuOpen(false)}
             >
               <Globe className="w-4 h-4" />
               <span className="uppercase">{otherLocale}</span>
             </Link>
-
-            <button
-              className="md:hidden p-2 text-neutral-600 hover:text-neutral-900"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-label="Toggle menu"
-            >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-          </div>
+            <Link href="/cars" onClick={() => setMobileMenuOpen(false)}>
+              <Button className="w-full rounded-full bg-white text-black hover:bg-zinc-200">
+                {t('inventory')}
+              </Button>
+            </Link>
+          </nav>
         </div>
-
-        {/* Mobile Navigation */}
-        {mobileMenuOpen && (
-          <div className="md:hidden py-4 border-t border-neutral-100">
-            <nav className="flex flex-col gap-2">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
-                    pathname === link.href
-                      ? 'bg-neutral-100 text-red-600'
-                      : 'text-neutral-600 hover:bg-neutral-50'
-                  }`}
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </nav>
-          </div>
-        )}
-      </div>
+      )}
     </header>
   )
 }
