@@ -1,0 +1,148 @@
+{
+  "brand_identity": {
+    "name": "Velocità Motors",
+    "tone": "Premium, Mechanical, Transparent, Cinematic",
+    "archetype": "The Performance Pro (Archetype 2) mixed with Jewel Luxury (Archetype 5)",
+    "theme_strategy": "Hybrid: Dark Mode for Landing/Hero (Cinematic) | Platinum Light Mode for Inventory/Admin (Functional Clarity)"
+  },
+  "typography": {
+    "headings": {
+      "font_family": "Outfit, sans-serif",
+      "weights": ["500", "700"],
+      "tracking": "tracking-tight",
+      "usage": "All section titles, hero text, car model names"
+    },
+    "body": {
+      "font_family": "Inter, sans-serif",
+      "weights": ["400", "500"],
+      "usage": "Paragraphs, UI elements, specs, admin data"
+    },
+    "accents": {
+      "font_family": "JetBrains Mono, monospace",
+      "usage": "Price tags, VIN numbers, technical specs, mileage"
+    }
+  },
+  "colors": {
+    "palette": {
+      "primary": {
+        "name": "Obsidian",
+        "hex": "#09090b",
+        "tailwind": "bg-zinc-950"
+      },
+      "secondary": {
+        "name": "Platinum",
+        "hex": "#f4f4f5",
+        "tailwind": "bg-zinc-100"
+      },
+      "accent": {
+        "name": "Racing Red",
+        "hex": "#dc2626",
+        "tailwind": "text-red-600"
+      },
+      "surface": {
+        "dark": "#18181b",
+        "light": "#ffffff"
+      }
+    },
+    "gradients": {
+      "hero_overlay": "bg-gradient-to-t from-zinc-950 via-zinc-950/50 to-transparent",
+      "glass": "bg-white/5 backdrop-blur-xl border-white/10"
+    }
+  },
+  "layout_system": {
+    "spacing": {
+      "base": "p-6",
+      "section": "py-24",
+      "container_padding": "px-6 md:px-12 lg:px-24"
+    },
+    "grids": {
+      "landing_bento": "grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8",
+      "inventory_list": "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6",
+      "admin_dashboard": "grid grid-cols-1 md:grid-cols-4 gap-4"
+    },
+    "border_radius": {
+      "default": "rounded-none",
+      "buttons": "rounded-full",
+      "cards": "rounded-xl"
+    }
+  },
+  "components": {
+    "buttons": {
+      "primary": "bg-white text-black hover:bg-zinc-200 rounded-full px-8 py-6 font-medium transition-all hover:scale-105",
+      "secondary": "border border-zinc-800 text-white hover:bg-zinc-900 rounded-full px-8 py-6 transition-all",
+      "accent": "bg-red-600 text-white hover:bg-red-700 rounded-full px-8 py-6 shadow-[0_0_20px_rgba(220,38,38,0.5)]"
+    },
+    "cards": {
+      "vehicle_card": "group relative overflow-hidden bg-zinc-900/50 border border-white/5 hover:border-white/20 transition-all duration-500",
+      "feature_card": "bg-zinc-50 border border-zinc-200 p-8 hover:shadow-xl transition-all"
+    },
+    "inputs": {
+      "style": "bg-transparent border-b border-zinc-700 rounded-none px-0 py-4 focus:border-white focus:ring-0 transition-colors placeholder:text-zinc-600"
+    }
+  },
+  "visual_enhancers": {
+    "textures": "Use subtle noise overlay on dark backgrounds (opacity 0.03)",
+    "motion": {
+      "scroll": "Use lenis for smooth scrolling",
+      "hover": "Images scale 1.05 on hover, text reveals",
+      "loading": "Staggered fade-in for grid items"
+    },
+    "effects": {
+      "glassmorphism": "Used for sticky nav and filter bars",
+      "tracing_beam": "Use for 'Featured Car' highlight borders"
+    }
+  },
+  "image_urls": {
+    "hero_backgrounds": [
+      "https://images.unsplash.com/photo-1769546253924-9e23d794be53?crop=entropy&cs=srgb&fm=jpg&q=85",
+      "https://images.unsplash.com/photo-1761138078661-541ba2bf7b12?crop=entropy&cs=srgb&fm=jpg&q=85"
+    ],
+    "inventory_cars": [
+      {
+        "name": "Porsche 911 Turbo S",
+        "url": "https://images.unsplash.com/photo-1761138078611-77fd556d5d21?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "category": "Sports"
+      },
+      {
+        "name": "Mercedes-Benz G-Wagon",
+        "url": "https://images.unsplash.com/photo-1763016940383-3be9417637a4?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "category": "SUV"
+      },
+      {
+        "name": "BMW M4 Competition",
+        "url": "https://images.unsplash.com/photo-1706647441758-aa78b1c13b19?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "category": "Coupe"
+      },
+      {
+        "name": "Audi RS7 Sportback",
+        "url": "https://images.unsplash.com/photo-1608585813346-61d43d84de94?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "category": "Sedan"
+      },
+      {
+        "name": "Ferrari 488",
+        "url": "https://images.unsplash.com/photo-1769491334080-4f68b7fbb8d4?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "category": "Supercar"
+      }
+    ],
+    "placeholders": {
+      "logo": "https://placehold.co/200x50/000000/FFFFFF?text=VELOCIT%C3%80",
+      "user": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80"
+    }
+  },
+  "instructions_to_main_agent": [
+    "1. INSTALL DEPENDENCIES: npm install lenis framer-motion lucide-react clsx tailwind-merge",
+    "2. SETUP FONTS: Import 'Outfit' and 'Inter' from Google Fonts in index.css",
+    "3. THEME IMPLEMENTATION: Wrap the Landing Page in a dark-theme container, but keep Admin/Inventory in light-theme by default (or provide a toggle).",
+    "4. COMPONENT OVERRIDES: Do not use default Shadcn cards. Build custom 'VehicleCard' components using the design rules above.",
+    "5. ADMIN PANEL: Use a dense sidebar layout. Use 'Tanstack Table' (Shadcn Table) for the car list.",
+    "6. IMAGES: Use the provided Unsplash URLs. Do not use placeholders for cars.",
+    "7. NAVIGATION: Create a sticky glassmorphic header.",
+    "8. FILTERS: Implement a sidebar filter for Inventory page (Price, Year, Brand, Mileage)."
+  ],
+  "universal_guidelines": [
+    "Avoid 'AI Slop': No generic centered text, no default blue buttons.",
+    "Use 'gap-8' or 'gap-12' for layout spacing to create luxury breathing room.",
+    "Ensure all interactive elements have hover states (scale, color change, or border glow).",
+    "Use 'data-testid' for all buttons and inputs."
+  ]
+}
