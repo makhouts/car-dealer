@@ -1,14 +1,58 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Car {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  shortId        String   @unique
+  slug           String
+  title          String
+  brand          String
+  model          String
+  year           Int
+  price          Int
+  mileage        Int
+  fuelType       String   // petrol, diesel, hybrid, electric, other
+  transmission   String   // automatic, manual, other
+  bodyType       String   // sedan, suv, coupe, hatchback, wagon, convertible, van, other
+  condition      String   // new, used
+  colorExterior  String
+  colorInterior  String?
+  powerHP        Int?
+  engine         String?
+  drivetrain     String?  // fwd, rwd, awd
+  seats          Int?
+  doors          Int?
+  features       String[]
+  description    String
+  images         String[]
+  isFeatured     Boolean  @default(false)
+  status         String   @default("available") // available, reserved, sold
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  leads          Lead[]
+}
+
+model Lead {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  email     String
+  phone     String?
+  message   String
+  carId     String?  @db.ObjectId
+  car       Car?     @relation(fields: [carId], references: [id])
+  handled   Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model Admin {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  username     String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
 }
