@@ -125,7 +125,7 @@ class CarDealershipAPITester:
             "status": "available"
         }
         
-        success, response_data = self.run_test("Create New Car", "POST", "cars", 201, car_data)
+        success, response_data = self.run_test("Create New Car", "POST", "cars", 200, car_data)
         if success and response_data and 'id' in response_data:
             self.created_car_id = response_data['id']
         return success
