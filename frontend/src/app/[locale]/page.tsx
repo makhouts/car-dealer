@@ -42,7 +42,7 @@ export default async function HomePage() {
   const featuredCars = await getFeaturedCars()
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-zinc-950">
       <Header />
       <main>
         <HeroSection />
