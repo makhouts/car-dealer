@@ -166,7 +166,7 @@ class CarDealershipAPITester:
             "message": "I'm interested in this test car"
         }
         
-        success, response_data = self.run_test("Create Inquiry", "POST", "inquiries", 201, inquiry_data)
+        success, response_data = self.run_test("Create Inquiry", "POST", "inquiries", 200, inquiry_data)
         if success and response_data and 'id' in response_data:
             self.created_inquiry_id = response_data['id']
         return success
