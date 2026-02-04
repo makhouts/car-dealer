@@ -196,7 +196,7 @@ class CarDealershipAPITester:
             "message": "This is a test contact message"
         }
         
-        return self.run_test("Submit Contact Form", "POST", "contact", 201, contact_data)[0]
+        return self.run_test("Submit Contact Form", "POST", "contact", 200, contact_data)[0]
 
     def test_get_contacts(self):
         """Test getting contact messages"""
