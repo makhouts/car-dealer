@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/prisma'
-import { AdminSidebar } from './components/admin-sidebar'
+import { AdminSidebar } from '../components/admin-sidebar'
 import { Car, MessageSquare, DollarSign, TrendingUp } from 'lucide-react'
 
 async function getStats() {
