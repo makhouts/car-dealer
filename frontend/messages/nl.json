@@ -1,0 +1,252 @@
+{
+  "common": {
+    "home": "Home",
+    "inventory": "Aanbod",
+    "about": "Over Ons",
+    "contact": "Contact",
+    "admin": "Admin",
+    "search": "Zoeken",
+    "filter": "Filteren",
+    "sort": "Sorteren",
+    "clear": "Wissen",
+    "apply": "Toepassen",
+    "loading": "Laden...",
+    "noResults": "Geen resultaten gevonden",
+    "viewAll": "Bekijk alles",
+    "viewDetails": "Bekijk details",
+    "back": "Terug",
+    "next": "Volgende",
+    "previous": "Vorige",
+    "save": "Opslaan",
+    "cancel": "Annuleren",
+    "delete": "Verwijderen",
+    "edit": "Bewerken",
+    "add": "Toevoegen",
+    "close": "Sluiten",
+    "yes": "Ja",
+    "no": "Nee",
+    "featured": "Uitgelicht",
+    "sold": "Verkocht",
+    "reserved": "Gereserveerd",
+    "available": "Beschikbaar",
+    "new": "Nieuw",
+    "used": "Gebruikt"
+  },
+  "nav": {
+    "home": "Home",
+    "inventory": "Aanbod",
+    "about": "Over Ons",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "Vind Uw Droomauto",
+    "subtitle": "Premium tweedehands voertuigen met kwaliteitsgarantie",
+    "cta": "Bekijk Aanbod",
+    "contact": "Neem Contact Op"
+  },
+  "benefits": {
+    "title": "Waarom Carcity?",
+    "warranty": {
+      "title": "12 Maanden Garantie",
+      "description": "Alle voertuigen komen met uitgebreide garantie voor uw gemoedsrust"
+    },
+    "inspection": {
+      "title": "150-Punten Inspectie",
+      "description": "Elke auto wordt grondig geïnspecteerd voordat deze te koop wordt aangeboden"
+    },
+    "financing": {
+      "title": "Flexibele Financiering",
+      "description": "Aantrekkelijke financieringsopties aangepast aan uw budget"
+    },
+    "delivery": {
+      "title": "Thuisbezorging",
+      "description": "Wij leveren uw nieuwe auto gratis bij u thuis af"
+    }
+  },
+  "featuredCars": {
+    "title": "Uitgelichte Voertuigen",
+    "subtitle": "Ontdek onze handgeselecteerde premium auto's"
+  },
+  "testimonials": {
+    "title": "Wat Klanten Zeggen",
+    "items": [
+      {
+        "name": "Jan de Vries",
+        "text": "Uitstekende service en een prachtige auto. Het hele proces verliep soepel en professioneel.",
+        "location": "Amsterdam"
+      },
+      {
+        "name": "Marie Claes",
+        "text": "Zeer tevreden met mijn aankoop. De auto was precies zoals beschreven en de prijs was eerlijk.",
+        "location": "Antwerpen"
+      },
+      {
+        "name": "Peter Janssen",
+        "text": "Goede begeleiding bij de aankoop. Ze namen de tijd om al mijn vragen te beantwoorden.",
+        "location": "Rotterdam"
+      }
+    ]
+  },
+  "cta": {
+    "title": "Klaar Om Uw Perfecte Auto Te Vinden?",
+    "subtitle": "Blader door ons uitgebreide aanbod of neem contact op voor persoonlijk advies",
+    "browse": "Bekijk Aanbod",
+    "contact": "Contacteer Ons"
+  },
+  "inventory": {
+    "title": "Ons Aanbod",
+    "subtitle": "Ontdek onze selectie premium tweedehands voertuigen",
+    "filters": {
+      "brand": "Merk",
+      "allBrands": "Alle Merken",
+      "priceRange": "Prijsbereik",
+      "yearRange": "Bouwjaar",
+      "maxMileage": "Max Kilometerstand",
+      "fuelType": "Brandstof",
+      "allFuelTypes": "Alle Brandstoffen",
+      "transmission": "Transmissie",
+      "allTransmissions": "Alle Transmissies",
+      "bodyType": "Carrosserie",
+      "allBodyTypes": "Alle Types",
+      "condition": "Staat",
+      "allConditions": "Alle Staten"
+    },
+    "sort": {
+      "newest": "Nieuwste eerst",
+      "priceAsc": "Prijs: laag naar hoog",
+      "priceDesc": "Prijs: hoog naar laag",
+      "mileageAsc": "Kilometerstand: laag naar hoog"
+    },
+    "results": "{count} voertuigen gevonden",
+    "noResults": "Geen voertuigen gevonden met deze filters"
+  },
+  "car": {
+    "price": "Prijs",
+    "year": "Bouwjaar",
+    "mileage": "Kilometerstand",
+    "fuelType": "Brandstof",
+    "transmission": "Transmissie",
+    "bodyType": "Carrosserie",
+    "condition": "Staat",
+    "colorExterior": "Exterieur kleur",
+    "colorInterior": "Interieur kleur",
+    "powerHP": "Vermogen",
+    "engine": "Motor",
+    "drivetrain": "Aandrijving",
+    "seats": "Zitplaatsen",
+    "doors": "Deuren",
+    "features": "Uitrusting",
+    "description": "Beschrijving",
+    "specifications": "Specificaties",
+    "similarCars": "Vergelijkbare Voertuigen",
+    "requestInfo": "Informatie Aanvragen",
+    "fuelTypes": {
+      "petrol": "Benzine",
+      "diesel": "Diesel",
+      "hybrid": "Hybride",
+      "electric": "Elektrisch",
+      "other": "Overig"
+    },
+    "transmissions": {
+      "automatic": "Automaat",
+      "manual": "Manueel",
+      "other": "Overig"
+    },
+    "bodyTypes": {
+      "sedan": "Sedan",
+      "suv": "SUV",
+      "coupe": "Coupé",
+      "hatchback": "Hatchback",
+      "wagon": "Break",
+      "convertible": "Cabrio",
+      "van": "Bestelwagen",
+      "other": "Overig"
+    },
+    "conditions": {
+      "new": "Nieuw",
+      "used": "Gebruikt"
+    },
+    "drivetrains": {
+      "fwd": "Voorwielaandrijving",
+      "rwd": "Achterwielaandrijving",
+      "awd": "Vierwielaandrijving"
+    }
+  },
+  "contact": {
+    "title": "Contacteer Ons",
+    "subtitle": "Heeft u vragen? Wij helpen u graag verder.",
+    "form": {
+      "name": "Naam",
+      "namePlaceholder": "Uw volledige naam",
+      "email": "E-mail",
+      "emailPlaceholder": "uw@email.com",
+      "phone": "Telefoon",
+      "phonePlaceholder": "+32 XXX XX XX XX",
+      "message": "Bericht",
+      "messagePlaceholder": "Hoe kunnen wij u helpen?",
+      "submit": "Bericht Versturen",
+      "sending": "Verzenden...",
+      "success": "Bedankt! Wij nemen zo snel mogelijk contact met u op.",
+      "error": "Er is iets misgegaan. Probeer het later opnieuw."
+    },
+    "info": {
+      "address": "Adres",
+      "addressValue": "Voorbeeldstraat 123\n1000 Brussel\nBelgië",
+      "phone": "Telefoon",
+      "phoneValue": "+32 123 45 67 89",
+      "email": "E-mail",
+      "emailValue": "info@carcity.be",
+      "hours": "Openingstijden",
+      "hoursValue": "Ma - Vr: 09:00 - 18:00\nZa: 10:00 - 16:00\nZo: Gesloten"
+    }
+  },
+  "about": {
+    "title": "Over Carcity",
+    "subtitle": "Uw vertrouwde partner voor premium tweedehands voertuigen",
+    "story": {
+      "title": "Ons Verhaal",
+      "content": "Carcity is opgericht met één doel: het kopen van een tweedehands auto net zo aangenaam maken als het kopen van een nieuwe. Met jarenlange ervaring in de automotive sector weten wij precies waar u naar zoekt: kwaliteit, betrouwbaarheid en uitstekende service."
+    },
+    "mission": {
+      "title": "Onze Missie",
+      "content": "Wij selecteren alleen de beste voertuigen voor ons aanbod. Elke auto ondergaat een grondige inspectie en komt met garantie. Transparantie staat bij ons voorop - u weet precies wat u koopt."
+    },
+    "values": {
+      "title": "Onze Waarden",
+      "quality": {
+        "title": "Kwaliteit",
+        "description": "Alleen de beste voertuigen in ons aanbod"
+      },
+      "transparency": {
+        "title": "Transparantie",
+        "description": "Eerlijke prijzen en volledige voertuighistorie"
+      },
+      "service": {
+        "title": "Service",
+        "description": "Persoonlijke begeleiding van A tot Z"
+      },
+      "trust": {
+        "title": "Vertrouwen",
+        "description": "12 maanden garantie op elk voertuig"
+      }
+    }
+  },
+  "whatsapp": {
+    "defaultMessage": "Hallo Carcity, ik heb interesse in een wagen.",
+    "carMessage": "Hallo Carcity, ik heb interesse in deze wagen: {carTitle} - {carUrl}"
+  },
+  "footer": {
+    "description": "Uw vertrouwde partner voor premium tweedehands voertuigen",
+    "quickLinks": "Snelle Links",
+    "contact": "Contact",
+    "followUs": "Volg Ons",
+    "rights": "Alle rechten voorbehouden"
+  },
+  "error": {
+    "notFound": "Pagina niet gevonden",
+    "notFoundDescription": "De pagina die u zoekt bestaat niet of is verplaatst.",
+    "backHome": "Terug naar Home",
+    "serverError": "Er is iets misgegaan",
+    "tryAgain": "Probeer opnieuw"
+  }
+}

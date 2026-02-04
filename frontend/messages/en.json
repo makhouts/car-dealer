@@ -1,0 +1,252 @@
+{
+  "common": {
+    "home": "Home",
+    "inventory": "Inventory",
+    "about": "About Us",
+    "contact": "Contact",
+    "admin": "Admin",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "clear": "Clear",
+    "apply": "Apply",
+    "loading": "Loading...",
+    "noResults": "No results found",
+    "viewAll": "View all",
+    "viewDetails": "View details",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "close": "Close",
+    "yes": "Yes",
+    "no": "No",
+    "featured": "Featured",
+    "sold": "Sold",
+    "reserved": "Reserved",
+    "available": "Available",
+    "new": "New",
+    "used": "Used"
+  },
+  "nav": {
+    "home": "Home",
+    "inventory": "Inventory",
+    "about": "About Us",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "Find Your Dream Car",
+    "subtitle": "Premium pre-owned vehicles with quality guarantee",
+    "cta": "Browse Inventory",
+    "contact": "Contact Us"
+  },
+  "benefits": {
+    "title": "Why Carcity?",
+    "warranty": {
+      "title": "12-Month Warranty",
+      "description": "All vehicles come with comprehensive warranty for your peace of mind"
+    },
+    "inspection": {
+      "title": "150-Point Inspection",
+      "description": "Every car is thoroughly inspected before being listed for sale"
+    },
+    "financing": {
+      "title": "Flexible Financing",
+      "description": "Attractive financing options tailored to your budget"
+    },
+    "delivery": {
+      "title": "Home Delivery",
+      "description": "We deliver your new car to your doorstep free of charge"
+    }
+  },
+  "featuredCars": {
+    "title": "Featured Vehicles",
+    "subtitle": "Discover our handpicked premium cars"
+  },
+  "testimonials": {
+    "title": "What Customers Say",
+    "items": [
+      {
+        "name": "John Smith",
+        "text": "Excellent service and a beautiful car. The whole process was smooth and professional.",
+        "location": "London"
+      },
+      {
+        "name": "Sarah Johnson",
+        "text": "Very satisfied with my purchase. The car was exactly as described and the price was fair.",
+        "location": "Manchester"
+      },
+      {
+        "name": "Michael Brown",
+        "text": "Great guidance during the purchase. They took the time to answer all my questions.",
+        "location": "Birmingham"
+      }
+    ]
+  },
+  "cta": {
+    "title": "Ready to Find Your Perfect Car?",
+    "subtitle": "Browse our extensive inventory or contact us for personal advice",
+    "browse": "Browse Inventory",
+    "contact": "Contact Us"
+  },
+  "inventory": {
+    "title": "Our Inventory",
+    "subtitle": "Discover our selection of premium pre-owned vehicles",
+    "filters": {
+      "brand": "Brand",
+      "allBrands": "All Brands",
+      "priceRange": "Price Range",
+      "yearRange": "Year",
+      "maxMileage": "Max Mileage",
+      "fuelType": "Fuel Type",
+      "allFuelTypes": "All Fuel Types",
+      "transmission": "Transmission",
+      "allTransmissions": "All Transmissions",
+      "bodyType": "Body Type",
+      "allBodyTypes": "All Types",
+      "condition": "Condition",
+      "allConditions": "All Conditions"
+    },
+    "sort": {
+      "newest": "Newest first",
+      "priceAsc": "Price: low to high",
+      "priceDesc": "Price: high to low",
+      "mileageAsc": "Mileage: low to high"
+    },
+    "results": "{count} vehicles found",
+    "noResults": "No vehicles found with these filters"
+  },
+  "car": {
+    "price": "Price",
+    "year": "Year",
+    "mileage": "Mileage",
+    "fuelType": "Fuel Type",
+    "transmission": "Transmission",
+    "bodyType": "Body Type",
+    "condition": "Condition",
+    "colorExterior": "Exterior Color",
+    "colorInterior": "Interior Color",
+    "powerHP": "Power",
+    "engine": "Engine",
+    "drivetrain": "Drivetrain",
+    "seats": "Seats",
+    "doors": "Doors",
+    "features": "Features",
+    "description": "Description",
+    "specifications": "Specifications",
+    "similarCars": "Similar Vehicles",
+    "requestInfo": "Request Information",
+    "fuelTypes": {
+      "petrol": "Petrol",
+      "diesel": "Diesel",
+      "hybrid": "Hybrid",
+      "electric": "Electric",
+      "other": "Other"
+    },
+    "transmissions": {
+      "automatic": "Automatic",
+      "manual": "Manual",
+      "other": "Other"
+    },
+    "bodyTypes": {
+      "sedan": "Sedan",
+      "suv": "SUV",
+      "coupe": "Coupe",
+      "hatchback": "Hatchback",
+      "wagon": "Wagon",
+      "convertible": "Convertible",
+      "van": "Van",
+      "other": "Other"
+    },
+    "conditions": {
+      "new": "New",
+      "used": "Used"
+    },
+    "drivetrains": {
+      "fwd": "Front-Wheel Drive",
+      "rwd": "Rear-Wheel Drive",
+      "awd": "All-Wheel Drive"
+    }
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "Have questions? We're happy to help.",
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "Your full name",
+      "email": "Email",
+      "emailPlaceholder": "your@email.com",
+      "phone": "Phone",
+      "phonePlaceholder": "+32 XXX XX XX XX",
+      "message": "Message",
+      "messagePlaceholder": "How can we help you?",
+      "submit": "Send Message",
+      "sending": "Sending...",
+      "success": "Thank you! We'll get back to you as soon as possible.",
+      "error": "Something went wrong. Please try again later."
+    },
+    "info": {
+      "address": "Address",
+      "addressValue": "Example Street 123\n1000 Brussels\nBelgium",
+      "phone": "Phone",
+      "phoneValue": "+32 123 45 67 89",
+      "email": "Email",
+      "emailValue": "info@carcity.be",
+      "hours": "Opening Hours",
+      "hoursValue": "Mon - Fri: 09:00 - 18:00\nSat: 10:00 - 16:00\nSun: Closed"
+    }
+  },
+  "about": {
+    "title": "About Carcity",
+    "subtitle": "Your trusted partner for premium pre-owned vehicles",
+    "story": {
+      "title": "Our Story",
+      "content": "Carcity was founded with one goal: to make buying a pre-owned car as pleasant as buying a new one. With years of experience in the automotive sector, we know exactly what you're looking for: quality, reliability, and excellent service."
+    },
+    "mission": {
+      "title": "Our Mission",
+      "content": "We only select the best vehicles for our inventory. Every car undergoes a thorough inspection and comes with warranty. Transparency is our priority - you know exactly what you're buying."
+    },
+    "values": {
+      "title": "Our Values",
+      "quality": {
+        "title": "Quality",
+        "description": "Only the best vehicles in our inventory"
+      },
+      "transparency": {
+        "title": "Transparency",
+        "description": "Fair prices and complete vehicle history"
+      },
+      "service": {
+        "title": "Service",
+        "description": "Personal guidance from A to Z"
+      },
+      "trust": {
+        "title": "Trust",
+        "description": "12-month warranty on every vehicle"
+      }
+    }
+  },
+  "whatsapp": {
+    "defaultMessage": "Hi Carcity, I'm interested in a car.",
+    "carMessage": "Hi Carcity, I'm interested in this car: {carTitle} - {carUrl}"
+  },
+  "footer": {
+    "description": "Your trusted partner for premium pre-owned vehicles",
+    "quickLinks": "Quick Links",
+    "contact": "Contact",
+    "followUs": "Follow Us",
+    "rights": "All rights reserved"
+  },
+  "error": {
+    "notFound": "Page Not Found",
+    "notFoundDescription": "The page you are looking for does not exist or has been moved.",
+    "backHome": "Back to Home",
+    "serverError": "Something went wrong",
+    "tryAgain": "Try again"
+  }
+}
