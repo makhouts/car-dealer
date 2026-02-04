@@ -13,12 +13,10 @@ const CarDetailPage = () => {
   const [car, setCar] = useState(null);
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(0);
-  const [inquiryForm, setInquiryForm] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    message: ""
-  });
+  const [formName, setFormName] = useState("");
+  const [formEmail, setFormEmail] = useState("");
+  const [formPhone, setFormPhone] = useState("");
+  const [formMessage, setFormMessage] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
@@ -26,10 +24,8 @@ const CarDetailPage = () => {
       try {
         const response = await axios.get(`${API}/cars/${id}`);
         setCar(response.data);
-        setInquiryForm(prev => ({
-          ...prev,
-          message: `Hi, I'm interested in the ${response.data.year} ${response.data.brand} ${response.data.model}. Please contact me with more information.`
-        }));
+        const c = response.data;
+        setFormMessage(`Hi, I'm interested in the ${c.year} ${c.brand} ${c.model}. Please contact me with more information.`);
       } catch (error) {
         console.error("Error fetching car:", error);
         toast.error("Car not found");
@@ -47,15 +43,16 @@ const CarDetailPage = () => {
     try {
       await axios.post(`${API}/inquiries`, {
         car_id: car.id,
-        ...inquiryForm
+        name: formName,
+        email: formEmail,
+        phone: formPhone,
+        message: formMessage
       });
       toast.success("Inquiry sent successfully! We'll contact you soon.");
-      setInquiryForm({
-        name: "",
-        email: "",
-        phone: "",
-        message: `Hi, I'm interested in the ${car.year} ${car.brand} ${car.model}. Please contact me with more information.`
-      });
+      setFormName("");
+      setFormEmail("");
+      setFormPhone("");
+      setFormMessage(`Hi, I'm interested in the ${car.year} ${car.brand} ${car.model}. Please contact me with more information.`);
     } catch (error) {
       toast.error("Failed to send inquiry. Please try again.");
     } finally {
@@ -64,13 +61,13 @@ const CarDetailPage = () => {
   };
 
   const nextImage = () => {
-    if (car && car.images.length > 0) {
+    if (car && car.images && car.images.length > 0) {
       setSelectedImage((prev) => (prev + 1) % car.images.length);
     }
   };
 
   const prevImage = () => {
-    if (car && car.images.length > 0) {
+    if (car && car.images && car.images.length > 0) {
       setSelectedImage((prev) => (prev - 1 + car.images.length) % car.images.length);
     }
   };
@@ -87,21 +84,20 @@ const CarDetailPage = () => {
   }
 
   if (!car) {
-    return null;
+    return (
+      <div className="min-h-screen bg-zinc-100 flex items-center justify-center">
+        <p className="text-zinc-600">Car not found</p>
+      </div>
+    );
   }
 
-  const specs = [
-    { icon: Calendar, label: "Year", value: car.year },
-    { icon: Gauge, label: "Mileage", value: `${car.mileage.toLocaleString()} mi` },
-    { icon: Fuel, label: "Fuel Type", value: car.fuel_type },
-    { icon: Settings, label: "Transmission", value: car.transmission },
-    { icon: Car, label: "Body Type", value: car.body_type },
-    { icon: Palette, label: "Color", value: car.color }
-  ];
+  const carImages = car.images || [];
+  const currentImage = carImages[selectedImage] || "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1200";
+  const carFeatures = car.features || [];
+  const isAvailable = car.status === "available";
 
   return (
     <div className="min-h-screen bg-zinc-100">
-      {/* Header */}
       <header className="bg-white border-b border-zinc-200 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
@@ -122,21 +118,18 @@ const CarDetailPage = () => {
 
       <div className="max-w-7xl mx-auto px-6 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Column - Images & Details */}
           <div className="lg:col-span-2 space-y-6">
-            {/* Main Image */}
             <div className="relative bg-white rounded-2xl overflow-hidden shadow-sm">
               <div className="aspect-[16/10] relative">
                 <img
-                  src={car.images[selectedImage] || "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1200"}
+                  src={currentImage}
                   alt={`${car.brand} ${car.model}`}
                   className="w-full h-full object-cover"
                   data-testid="main-car-image"
                 />
                 
-                {/* Navigation Arrows */}
-                {car.images.length > 1 && (
-                  <>
+                {carImages.length > 1 && (
+                  <div>
                     <button
                       onClick={prevImage}
                       className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-lg transition-all"
@@ -151,10 +144,9 @@ const CarDetailPage = () => {
                     >
                       <ChevronRight size={20} />
                     </button>
-                  </>
+                  </div>
                 )}
 
-                {/* Status Badge */}
                 {car.status !== "available" && (
                   <span className={`absolute top-4 right-4 px-4 py-2 rounded-full font-medium text-sm ${
                     car.status === "sold" ? "bg-zinc-900 text-white" : "bg-amber-500 text-white"
@@ -164,10 +156,9 @@ const CarDetailPage = () => {
                 )}
               </div>
 
-              {/* Thumbnails */}
-              {car.images.length > 1 && (
+              {carImages.length > 1 && (
                 <div className="p-4 flex gap-3 overflow-x-auto hide-scrollbar">
-                  {car.images.map((img, index) => (
+                  {carImages.map((img, index) => (
                     <button
                       key={index}
                       onClick={() => setSelectedImage(index)}
@@ -183,42 +174,81 @@ const CarDetailPage = () => {
               )}
             </div>
 
-            {/* Specifications */}
             <div className="bg-white rounded-2xl p-6 shadow-sm">
               <h2 className="text-xl font-semibold text-zinc-900 mb-6">Specifications</h2>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                {specs.map((spec, index) => (
-                  <div key={index} className="flex items-center gap-3 p-4 bg-zinc-50 rounded-xl">
-                    <div className="w-10 h-10 bg-zinc-200 rounded-lg flex items-center justify-center">
-                      <spec.icon size={20} className="text-zinc-600" />
-                    </div>
-                    <div>
-                      <p className="text-xs text-zinc-500">{spec.label}</p>
-                      <p className="font-medium text-zinc-900">{spec.value}</p>
-                    </div>
+                <div className="flex items-center gap-3 p-4 bg-zinc-50 rounded-xl">
+                  <div className="w-10 h-10 bg-zinc-200 rounded-lg flex items-center justify-center">
+                    <Calendar size={20} className="text-zinc-600" />
                   </div>
-                ))}
+                  <div>
+                    <p className="text-xs text-zinc-500">Year</p>
+                    <p className="font-medium text-zinc-900">{car.year}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 p-4 bg-zinc-50 rounded-xl">
+                  <div className="w-10 h-10 bg-zinc-200 rounded-lg flex items-center justify-center">
+                    <Gauge size={20} className="text-zinc-600" />
+                  </div>
+                  <div>
+                    <p className="text-xs text-zinc-500">Mileage</p>
+                    <p className="font-medium text-zinc-900">{car.mileage.toLocaleString()} mi</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 p-4 bg-zinc-50 rounded-xl">
+                  <div className="w-10 h-10 bg-zinc-200 rounded-lg flex items-center justify-center">
+                    <Fuel size={20} className="text-zinc-600" />
+                  </div>
+                  <div>
+                    <p className="text-xs text-zinc-500">Fuel Type</p>
+                    <p className="font-medium text-zinc-900">{car.fuel_type}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 p-4 bg-zinc-50 rounded-xl">
+                  <div className="w-10 h-10 bg-zinc-200 rounded-lg flex items-center justify-center">
+                    <Settings size={20} className="text-zinc-600" />
+                  </div>
+                  <div>
+                    <p className="text-xs text-zinc-500">Transmission</p>
+                    <p className="font-medium text-zinc-900">{car.transmission}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 p-4 bg-zinc-50 rounded-xl">
+                  <div className="w-10 h-10 bg-zinc-200 rounded-lg flex items-center justify-center">
+                    <Car size={20} className="text-zinc-600" />
+                  </div>
+                  <div>
+                    <p className="text-xs text-zinc-500">Body Type</p>
+                    <p className="font-medium text-zinc-900">{car.body_type}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 p-4 bg-zinc-50 rounded-xl">
+                  <div className="w-10 h-10 bg-zinc-200 rounded-lg flex items-center justify-center">
+                    <Palette size={20} className="text-zinc-600" />
+                  </div>
+                  <div>
+                    <p className="text-xs text-zinc-500">Color</p>
+                    <p className="font-medium text-zinc-900">{car.color}</p>
+                  </div>
+                </div>
               </div>
 
-              {/* Engine Info */}
               <div className="mt-6 p-4 bg-zinc-900 rounded-xl">
                 <p className="text-zinc-400 text-sm mb-1">Engine</p>
                 <p className="text-white font-mono text-lg">{car.engine}</p>
               </div>
             </div>
 
-            {/* Description */}
             <div className="bg-white rounded-2xl p-6 shadow-sm">
               <h2 className="text-xl font-semibold text-zinc-900 mb-4">Description</h2>
               <p className="text-zinc-600 leading-relaxed">{car.description}</p>
             </div>
 
-            {/* Features */}
-            {car.features && car.features.length > 0 && (
+            {carFeatures.length > 0 && (
               <div className="bg-white rounded-2xl p-6 shadow-sm">
                 <h2 className="text-xl font-semibold text-zinc-900 mb-4">Features & Equipment</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  {car.features.map((feature, index) => (
+                  {carFeatures.map((feature, index) => (
                     <div key={index} className="flex items-center gap-3">
                       <div className="w-6 h-6 bg-emerald-100 rounded-full flex items-center justify-center">
                         <Check size={14} className="text-emerald-600" />
@@ -231,9 +261,7 @@ const CarDetailPage = () => {
             )}
           </div>
 
-          {/* Right Column - Price & Inquiry */}
           <div className="space-y-6">
-            {/* Price Card */}
             <div className="bg-white rounded-2xl p-6 shadow-sm sticky top-24">
               <div className="mb-6">
                 <p className="text-zinc-500 text-sm">{car.brand}</p>
@@ -249,58 +277,56 @@ const CarDetailPage = () => {
                 <span className="bg-zinc-100 text-zinc-700 px-3 py-1 rounded-full text-sm">{car.transmission}</span>
               </div>
 
-              {car.status === "available" ? (
-                <>
-                  <div className="border-t border-zinc-200 pt-6">
-                    <h3 className="font-semibold text-zinc-900 mb-4">Interested in this car?</h3>
-                    <form onSubmit={handleSubmitInquiry} className="space-y-4">
-                      <input
-                        type="text"
-                        placeholder="Your Name"
-                        value={inquiryForm.name}
-                        onChange={(e) => setInquiryForm({ ...inquiryForm, name: e.target.value })}
-                        className="w-full px-4 py-3 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-zinc-900 focus:border-transparent transition-all"
-                        required
-                        data-testid="inquiry-name"
-                      />
-                      <input
-                        type="email"
-                        placeholder="Email Address"
-                        value={inquiryForm.email}
-                        onChange={(e) => setInquiryForm({ ...inquiryForm, email: e.target.value })}
-                        className="w-full px-4 py-3 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-zinc-900 focus:border-transparent transition-all"
-                        required
-                        data-testid="inquiry-email"
-                      />
-                      <input
-                        type="tel"
-                        placeholder="Phone Number"
-                        value={inquiryForm.phone}
-                        onChange={(e) => setInquiryForm({ ...inquiryForm, phone: e.target.value })}
-                        className="w-full px-4 py-3 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-zinc-900 focus:border-transparent transition-all"
-                        required
-                        data-testid="inquiry-phone"
-                      />
-                      <textarea
-                        placeholder="Your Message"
-                        value={inquiryForm.message}
-                        onChange={(e) => setInquiryForm({ ...inquiryForm, message: e.target.value })}
-                        rows={3}
-                        className="w-full px-4 py-3 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-zinc-900 focus:border-transparent transition-all resize-none"
-                        required
-                        data-testid="inquiry-message"
-                      />
-                      <Button
-                        type="submit"
-                        disabled={submitting}
-                        className="w-full bg-red-600 hover:bg-red-700 text-white py-6 rounded-full text-lg"
-                        data-testid="send-inquiry-btn"
-                      >
-                        {submitting ? "Sending..." : "Send Inquiry"}
-                      </Button>
-                    </form>
-                  </div>
-                </>
+              {isAvailable ? (
+                <div className="border-t border-zinc-200 pt-6">
+                  <h3 className="font-semibold text-zinc-900 mb-4">Interested in this car?</h3>
+                  <form onSubmit={handleSubmitInquiry} className="space-y-4">
+                    <input
+                      type="text"
+                      placeholder="Your Name"
+                      value={formName}
+                      onChange={(e) => setFormName(e.target.value)}
+                      className="w-full px-4 py-3 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-zinc-900 focus:border-transparent transition-all"
+                      required
+                      data-testid="inquiry-name"
+                    />
+                    <input
+                      type="email"
+                      placeholder="Email Address"
+                      value={formEmail}
+                      onChange={(e) => setFormEmail(e.target.value)}
+                      className="w-full px-4 py-3 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-zinc-900 focus:border-transparent transition-all"
+                      required
+                      data-testid="inquiry-email"
+                    />
+                    <input
+                      type="tel"
+                      placeholder="Phone Number"
+                      value={formPhone}
+                      onChange={(e) => setFormPhone(e.target.value)}
+                      className="w-full px-4 py-3 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-zinc-900 focus:border-transparent transition-all"
+                      required
+                      data-testid="inquiry-phone"
+                    />
+                    <textarea
+                      placeholder="Your Message"
+                      value={formMessage}
+                      onChange={(e) => setFormMessage(e.target.value)}
+                      rows={3}
+                      className="w-full px-4 py-3 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-zinc-900 focus:border-transparent transition-all resize-none"
+                      required
+                      data-testid="inquiry-message"
+                    />
+                    <Button
+                      type="submit"
+                      disabled={submitting}
+                      className="w-full bg-red-600 hover:bg-red-700 text-white py-6 rounded-full text-lg"
+                      data-testid="send-inquiry-btn"
+                    >
+                      {submitting ? "Sending..." : "Send Inquiry"}
+                    </Button>
+                  </form>
+                </div>
               ) : (
                 <div className="bg-zinc-100 rounded-xl p-4 text-center">
                   <p className="text-zinc-600">
