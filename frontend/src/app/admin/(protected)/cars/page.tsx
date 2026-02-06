@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { AdminSidebar } from '../components/admin-sidebar'
 import { Button } from '@/components/ui/button'
@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { TableSkeleton } from '@/components/ui/skeleton'
-import { Plus, Pencil, Trash2, X, ImagePlus } from 'lucide-react'
+import { Plus, Pencil, Trash2, X, ImagePlus, Upload, Link as LinkIcon, CheckCircle, Clock, XCircle } from 'lucide-react'
 import { toast } from 'sonner'
 
 interface Car {
@@ -44,6 +44,12 @@ const BODY_TYPES = ['sedan', 'suv', 'coupe', 'hatchback', 'wagon', 'convertible'
 const CONDITIONS = ['new', 'used']
 const STATUSES = ['available', 'reserved', 'sold']
 
+const STATUS_CONFIG = {
+  available: { label: 'Beschikbaar', icon: CheckCircle, bg: 'bg-green-100', text: 'text-green-700', hover: 'hover:bg-green-200' },
+  reserved: { label: 'Gereserveerd', icon: Clock, bg: 'bg-amber-100', text: 'text-amber-700', hover: 'hover:bg-amber-200' },
+  sold: { label: 'Verkocht', icon: XCircle, bg: 'bg-neutral-200', text: 'text-neutral-700', hover: 'hover:bg-neutral-300' },
+}
+
 const emptyCar = {
   title: '',
   brand: '',
@@ -71,6 +77,7 @@ const emptyCar = {
 
 export default function AdminCarsPage() {
   const router = useRouter()
+  const fileInputRef = useRef<HTMLInputElement>(null)
   const [cars, setCars] = useState<Car[]>([])
   const [loading, setLoading] = useState(true)
   const [dialogOpen, setDialogOpen] = useState(false)
@@ -79,6 +86,8 @@ export default function AdminCarsPage() {
   const [featureInput, setFeatureInput] = useState('')
   const [imageInput, setImageInput] = useState('')
   const [submitting, setSubmitting] = useState(false)
+  const [uploading, setUploading] = useState(false)
+  const [imageMode, setImageMode] = useState<'upload' | 'url'>('upload')
 
   useEffect(() => {
     fetchCars()
@@ -161,6 +170,41 @@ export default function AdminCarsPage() {
     setFormData({ ...formData, images: formData.images.filter((_, i) => i !== index) })
   }
 
+  // Handle file upload
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files
+    if (!files || files.length === 0) return
+
+    setUploading(true)
+    const formDataUpload = new FormData()
+    
+    for (let i = 0; i < files.length; i++) {
+      formDataUpload.append('files', files[i])
+    }
+
+    try {
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        body: formDataUpload,
+      })
+
+      if (res.ok) {
+        const { urls } = await res.json()
+        setFormData({ ...formData, images: [...formData.images, ...urls] })
+        toast.success(`${urls.length} foto('s) geüpload!`)
+      } else {
+        throw new Error()
+      }
+    } catch {
+      toast.error('Upload mislukt')
+    } finally {
+      setUploading(false)
+      if (fileInputRef.current) {
+        fileInputRef.current.value = ''
+      }
+    }
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setSubmitting(true)
@@ -176,7 +220,7 @@ export default function AdminCarsPage() {
       })
 
       if (res.ok) {
-        toast.success(editingCar ? 'Car updated!' : 'Car added!')
+        toast.success(editingCar ? 'Auto bijgewerkt!' : 'Auto toegevoegd!')
         closeDialog()
         fetchCars()
         router.refresh()
@@ -184,26 +228,49 @@ export default function AdminCarsPage() {
         throw new Error()
       }
     } catch {
-      toast.error('Failed to save car')
+      toast.error('Opslaan mislukt')
     } finally {
       setSubmitting(false)
     }
   }
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this car?')) return
+    if (!confirm('Weet je zeker dat je deze auto wilt verwijderen?')) return
 
     try {
       const res = await fetch(`/api/cars/${id}`, { method: 'DELETE' })
       if (res.ok) {
-        toast.success('Car deleted!')
+        toast.success('Auto verwijderd!')
         fetchCars()
         router.refresh()
       } else {
         throw new Error()
       }
     } catch {
-      toast.error('Failed to delete car')
+      toast.error('Verwijderen mislukt')
+    }
+  }
+
+  // Quick status change
+  const handleQuickStatusChange = async (carId: string, newStatus: string) => {
+    try {
+      const car = cars.find(c => c.id === carId)
+      if (!car) return
+
+      const res = await fetch(`/api/cars/${carId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...car, status: newStatus }),
+      })
+
+      if (res.ok) {
+        toast.success(`Status gewijzigd naar ${STATUS_CONFIG[newStatus as keyof typeof STATUS_CONFIG]?.label || newStatus}`)
+        fetchCars()
+      } else {
+        throw new Error()
+      }
+    } catch {
+      toast.error('Status wijzigen mislukt')
     }
   }
 
@@ -214,11 +281,11 @@ export default function AdminCarsPage() {
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center justify-between mb-8">
             <div>
-              <h1 className="text-3xl font-bold text-neutral-900">Cars</h1>
-              <p className="text-neutral-600">Manage your vehicle inventory</p>
+              <h1 className="text-3xl font-bold text-neutral-900">Auto's</h1>
+              <p className="text-neutral-600">Beheer je voorraad</p>
             </div>
             <Button onClick={() => openDialog()} className="gap-2">
-              <Plus className="w-4 h-4" /> Add Car
+              <Plus className="w-4 h-4" /> Auto Toevoegen
             </Button>
           </div>
 
@@ -227,17 +294,17 @@ export default function AdminCarsPage() {
             {loading ? (
               <div className="p-6"><TableSkeleton /></div>
             ) : cars.length === 0 ? (
-              <p className="p-12 text-center text-neutral-500">No cars yet. Add your first car!</p>
+              <p className="p-12 text-center text-neutral-500">Nog geen auto's. Voeg je eerste auto toe!</p>
             ) : (
               <table className="w-full">
                 <thead>
                   <tr className="bg-neutral-50 text-left text-xs font-medium text-neutral-500 uppercase tracking-wider">
-                    <th className="p-4">Vehicle</th>
-                    <th className="p-4">Year</th>
-                    <th className="p-4">Price</th>
+                    <th className="p-4">Voertuig</th>
+                    <th className="p-4">Jaar</th>
+                    <th className="p-4">Prijs</th>
                     <th className="p-4">Status</th>
                     <th className="p-4">Featured</th>
-                    <th className="p-4">Actions</th>
+                    <th className="p-4">Acties</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-neutral-100">
@@ -259,21 +326,49 @@ export default function AdminCarsPage() {
                       <td className="p-4 font-mono">{car.year}</td>
                       <td className="p-4 font-mono text-red-600">€{car.price.toLocaleString()}</td>
                       <td className="p-4">
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                          car.status === 'available' ? 'bg-green-100 text-green-700' :
-                          car.status === 'sold' ? 'bg-neutral-100 text-neutral-700' :
-                          'bg-amber-100 text-amber-700'
-                        }`}>
-                          {car.status}
-                        </span>
+                        {/* Quick Status Dropdown */}
+                        <div className="relative group">
+                          <button 
+                            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
+                              STATUS_CONFIG[car.status as keyof typeof STATUS_CONFIG]?.bg || 'bg-neutral-100'
+                            } ${STATUS_CONFIG[car.status as keyof typeof STATUS_CONFIG]?.text || 'text-neutral-700'} ${
+                              STATUS_CONFIG[car.status as keyof typeof STATUS_CONFIG]?.hover || 'hover:bg-neutral-200'
+                            }`}
+                          >
+                            {(() => {
+                              const Icon = STATUS_CONFIG[car.status as keyof typeof STATUS_CONFIG]?.icon || CheckCircle
+                              return <Icon className="w-3.5 h-3.5" />
+                            })()}
+                            {STATUS_CONFIG[car.status as keyof typeof STATUS_CONFIG]?.label || car.status}
+                          </button>
+                          {/* Dropdown */}
+                          <div className="absolute left-0 top-full mt-1 bg-white rounded-lg shadow-lg border border-neutral-200 py-1 z-10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all min-w-[140px]">
+                            {STATUSES.map((status) => {
+                              const config = STATUS_CONFIG[status as keyof typeof STATUS_CONFIG]
+                              const Icon = config?.icon || CheckCircle
+                              return (
+                                <button
+                                  key={status}
+                                  onClick={() => handleQuickStatusChange(car.id, status)}
+                                  className={`w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-neutral-50 ${
+                                    car.status === status ? 'bg-neutral-100 font-medium' : ''
+                                  }`}
+                                >
+                                  <Icon className={`w-4 h-4 ${config?.text || ''}`} />
+                                  {config?.label || status}
+                                </button>
+                              )
+                            })}
+                          </div>
+                        </div>
                       </td>
-                      <td className="p-4">{car.isFeatured && <span className="text-amber-500">★</span>}</td>
+                      <td className="p-4">{car.isFeatured && <span className="text-amber-500 text-lg">★</span>}</td>
                       <td className="p-4">
                         <div className="flex items-center gap-2">
-                          <button onClick={() => openDialog(car)} className="p-2 text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 rounded-lg">
+                          <button onClick={() => openDialog(car)} className="p-2 text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 rounded-lg" title="Bewerken">
                             <Pencil className="w-4 h-4" />
                           </button>
-                          <button onClick={() => handleDelete(car.id)} className="p-2 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg">
+                          <button onClick={() => handleDelete(car.id)} className="p-2 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg" title="Verwijderen">
                             <Trash2 className="w-4 h-4" />
                           </button>
                         </div>
@@ -292,13 +387,13 @@ export default function AdminCarsPage() {
         <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
             <div className="p-6 border-b border-neutral-100 flex items-center justify-between">
-              <h2 className="text-xl font-semibold">{editingCar ? 'Edit Car' : 'Add Car'}</h2>
+              <h2 className="text-xl font-semibold">{editingCar ? 'Auto Bewerken' : 'Auto Toevoegen'}</h2>
               <button onClick={closeDialog} className="text-neutral-500 hover:text-neutral-900"><X className="w-5 h-5" /></button>
             </div>
             <form onSubmit={handleSubmit} className="p-6 space-y-6">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium mb-2">Brand *</label>
+                  <label className="block text-sm font-medium mb-2">Merk *</label>
                   <Input value={formData.brand} onChange={(e) => setFormData({ ...formData, brand: e.target.value })} required />
                 </div>
                 <div>
@@ -308,28 +403,28 @@ export default function AdminCarsPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">Title *</label>
-                <Input value={formData.title} onChange={(e) => setFormData({ ...formData, title: e.target.value })} placeholder="e.g., BMW 330i M Sport 2020" required />
+                <label className="block text-sm font-medium mb-2">Titel *</label>
+                <Input value={formData.title} onChange={(e) => setFormData({ ...formData, title: e.target.value })} placeholder="bijv. BMW 330i M Sport 2020" required />
               </div>
 
               <div className="grid grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-sm font-medium mb-2">Year *</label>
+                  <label className="block text-sm font-medium mb-2">Bouwjaar *</label>
                   <Input type="number" value={formData.year} onChange={(e) => setFormData({ ...formData, year: parseInt(e.target.value) })} required />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-2">Price (€) *</label>
+                  <label className="block text-sm font-medium mb-2">Prijs (€) *</label>
                   <Input type="number" value={formData.price} onChange={(e) => setFormData({ ...formData, price: parseInt(e.target.value) })} required />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-2">Mileage (km) *</label>
+                  <label className="block text-sm font-medium mb-2">Kilometerstand *</label>
                   <Input type="number" value={formData.mileage} onChange={(e) => setFormData({ ...formData, mileage: parseInt(e.target.value) })} required />
                 </div>
               </div>
 
               <div className="grid grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-sm font-medium mb-2">Fuel Type</label>
+                  <label className="block text-sm font-medium mb-2">Brandstof</label>
                   <Select value={formData.fuelType} onValueChange={(v) => setFormData({ ...formData, fuelType: v })}>
                     <SelectTrigger><SelectValue /></SelectTrigger>
                     <SelectContent>
@@ -338,7 +433,7 @@ export default function AdminCarsPage() {
                   </Select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-2">Transmission</label>
+                  <label className="block text-sm font-medium mb-2">Transmissie</label>
                   <Select value={formData.transmission} onValueChange={(v) => setFormData({ ...formData, transmission: v })}>
                     <SelectTrigger><SelectValue /></SelectTrigger>
                     <SelectContent>
@@ -347,7 +442,7 @@ export default function AdminCarsPage() {
                   </Select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-2">Body Type</label>
+                  <label className="block text-sm font-medium mb-2">Carrosserie</label>
                   <Select value={formData.bodyType} onValueChange={(v) => setFormData({ ...formData, bodyType: v })}>
                     <SelectTrigger><SelectValue /></SelectTrigger>
                     <SelectContent>
@@ -359,11 +454,11 @@ export default function AdminCarsPage() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium mb-2">Exterior Color *</label>
+                  <label className="block text-sm font-medium mb-2">Kleur Exterieur *</label>
                   <Input value={formData.colorExterior} onChange={(e) => setFormData({ ...formData, colorExterior: e.target.value })} required />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-2">Condition</label>
+                  <label className="block text-sm font-medium mb-2">Conditie</label>
                   <Select value={formData.condition} onValueChange={(v) => setFormData({ ...formData, condition: v })}>
                     <SelectTrigger><SelectValue /></SelectTrigger>
                     <SelectContent>
@@ -374,16 +469,16 @@ export default function AdminCarsPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">Description *</label>
+                <label className="block text-sm font-medium mb-2">Beschrijving *</label>
                 <Textarea value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} rows={4} required />
               </div>
 
               {/* Features */}
               <div>
-                <label className="block text-sm font-medium mb-2">Features</label>
+                <label className="block text-sm font-medium mb-2">Opties & Features</label>
                 <div className="flex gap-2 mb-2">
-                  <Input value={featureInput} onChange={(e) => setFeatureInput(e.target.value)} placeholder="Add feature" onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addFeature())} />
-                  <Button type="button" variant="outline" onClick={addFeature}>Add</Button>
+                  <Input value={featureInput} onChange={(e) => setFeatureInput(e.target.value)} placeholder="Voeg optie toe" onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addFeature())} />
+                  <Button type="button" variant="outline" onClick={addFeature}>Toevoegen</Button>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {formData.features.map((f, i) => (
@@ -394,23 +489,105 @@ export default function AdminCarsPage() {
                 </div>
               </div>
 
-              {/* Images */}
+              {/* Images - With Upload and URL options */}
               <div>
-                <label className="block text-sm font-medium mb-2">Image URLs</label>
-                <div className="flex gap-2 mb-2">
-                  <Input value={imageInput} onChange={(e) => setImageInput(e.target.value)} placeholder="Paste image URL" onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addImage())} />
-                  <Button type="button" variant="outline" onClick={addImage}><ImagePlus className="w-4 h-4" /></Button>
+                <label className="block text-sm font-medium mb-2">Foto's</label>
+                
+                {/* Toggle between upload and URL */}
+                <div className="flex gap-2 mb-3">
+                  <button
+                    type="button"
+                    onClick={() => setImageMode('upload')}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                      imageMode === 'upload' 
+                        ? 'bg-neutral-900 text-white' 
+                        : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
+                    }`}
+                  >
+                    <Upload className="w-4 h-4" /> Upload
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setImageMode('url')}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                      imageMode === 'url' 
+                        ? 'bg-neutral-900 text-white' 
+                        : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
+                    }`}
+                  >
+                    <LinkIcon className="w-4 h-4" /> URL
+                  </button>
                 </div>
-                <div className="grid grid-cols-4 gap-2">
-                  {formData.images.map((img, i) => (
-                    <div key={i} className="relative group">
-                      <img src={img} alt="" className="w-full h-20 object-cover rounded-lg" />
-                      <button type="button" onClick={() => removeImage(i)} className="absolute top-1 right-1 w-5 h-5 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 flex items-center justify-center">
-                        <X className="w-3 h-3" />
-                      </button>
-                    </div>
-                  ))}
-                </div>
+
+                {imageMode === 'upload' ? (
+                  <div className="mb-3">
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept="image/*"
+                      multiple
+                      onChange={handleFileUpload}
+                      className="hidden"
+                      id="image-upload"
+                    />
+                    <label
+                      htmlFor="image-upload"
+                      className={`flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-xl cursor-pointer transition-colors ${
+                        uploading 
+                          ? 'border-neutral-300 bg-neutral-50' 
+                          : 'border-neutral-300 hover:border-neutral-400 hover:bg-neutral-50'
+                      }`}
+                    >
+                      {uploading ? (
+                        <div className="flex items-center gap-2 text-neutral-500">
+                          <div className="w-5 h-5 border-2 border-neutral-400 border-t-transparent rounded-full animate-spin" />
+                          Uploaden...
+                        </div>
+                      ) : (
+                        <>
+                          <Upload className="w-8 h-8 text-neutral-400 mb-2" />
+                          <span className="text-sm text-neutral-600">Klik om foto's te uploaden</span>
+                          <span className="text-xs text-neutral-400 mt-1">of sleep bestanden hierheen</span>
+                        </>
+                      )}
+                    </label>
+                  </div>
+                ) : (
+                  <div className="flex gap-2 mb-3">
+                    <Input 
+                      value={imageInput} 
+                      onChange={(e) => setImageInput(e.target.value)} 
+                      placeholder="Plak afbeelding URL" 
+                      onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addImage())} 
+                    />
+                    <Button type="button" variant="outline" onClick={addImage}>
+                      <ImagePlus className="w-4 h-4" />
+                    </Button>
+                  </div>
+                )}
+
+                {/* Image Preview Grid */}
+                {formData.images.length > 0 && (
+                  <div className="grid grid-cols-4 gap-2">
+                    {formData.images.map((img, i) => (
+                      <div key={i} className="relative group aspect-video">
+                        <img src={img} alt="" className="w-full h-full object-cover rounded-lg" />
+                        <button 
+                          type="button" 
+                          onClick={() => removeImage(i)} 
+                          className="absolute top-1 right-1 w-6 h-6 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity"
+                        >
+                          <X className="w-3 h-3" />
+                        </button>
+                        {i === 0 && (
+                          <span className="absolute bottom-1 left-1 bg-black/70 text-white text-xs px-2 py-0.5 rounded">
+                            Hoofdfoto
+                          </span>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
 
               <div className="grid grid-cols-2 gap-4">
@@ -419,21 +596,30 @@ export default function AdminCarsPage() {
                   <Select value={formData.status} onValueChange={(v) => setFormData({ ...formData, status: v })}>
                     <SelectTrigger><SelectValue /></SelectTrigger>
                     <SelectContent>
-                      {STATUSES.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}
+                      {STATUSES.map((s) => {
+                        const config = STATUS_CONFIG[s as keyof typeof STATUS_CONFIG]
+                        return (
+                          <SelectItem key={s} value={s}>
+                            <span className="flex items-center gap-2">
+                              {config?.label || s}
+                            </span>
+                          </SelectItem>
+                        )
+                      })}
                     </SelectContent>
                   </Select>
                 </div>
                 <div className="flex items-end">
                   <label className="flex items-center gap-2 cursor-pointer">
                     <input type="checkbox" checked={formData.isFeatured} onChange={(e) => setFormData({ ...formData, isFeatured: e.target.checked })} className="w-4 h-4 rounded" />
-                    <span>Featured</span>
+                    <span>Uitgelicht op homepage</span>
                   </label>
                 </div>
               </div>
 
               <div className="flex justify-end gap-3 pt-4 border-t">
-                <Button type="button" variant="outline" onClick={closeDialog}>Cancel</Button>
-                <Button type="submit" disabled={submitting}>{submitting ? 'Saving...' : editingCar ? 'Update' : 'Add Car'}</Button>
+                <Button type="button" variant="outline" onClick={closeDialog}>Annuleren</Button>
+                <Button type="submit" disabled={submitting}>{submitting ? 'Opslaan...' : editingCar ? 'Bijwerken' : 'Toevoegen'}</Button>
               </div>
             </form>
           </div>
