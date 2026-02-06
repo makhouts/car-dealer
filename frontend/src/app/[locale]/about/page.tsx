@@ -26,7 +26,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
 
   return (
     <div className="min-h-screen bg-white">
-      <Header />
+      <Header variant="light" />
       <main>
         {/* Hero */}
         <section className="relative py-24 bg-neutral-900">
