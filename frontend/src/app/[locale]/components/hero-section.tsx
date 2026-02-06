@@ -2,7 +2,6 @@
 
 import { Link } from '@/i18n/routing'
 import { useTranslations } from 'next-intl'
-import { Button } from '@/components/ui/button'
 import { ArrowRight } from 'lucide-react'
 
 export function HeroSection() {
@@ -33,22 +32,21 @@ export function HeroSection() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <Link href="/cars">
-              <Button 
-                className="pill-button-primary text-lg px-10 py-6 flex items-center gap-2 h-auto"
+              <button 
+                className="inline-flex items-center justify-center gap-2 bg-white text-black hover:bg-zinc-200 rounded-full px-10 py-4 text-lg font-medium transition-all hover:scale-105"
                 data-testid="hero-browse-btn"
               >
                 {t('cta')}
                 <ArrowRight size={20} />
-              </Button>
+              </button>
             </Link>
             <Link href="/contact">
-              <Button 
-                variant="outline" 
-                className="pill-button-secondary text-lg px-10 py-6 border-zinc-700 h-auto"
+              <button 
+                className="inline-flex items-center justify-center border-2 border-zinc-600 text-white hover:bg-zinc-800 rounded-full px-10 py-4 text-lg font-medium transition-all"
                 data-testid="hero-contact-btn"
               >
                 {t('contact')}
-              </Button>
+              </button>
             </Link>
           </div>
         </div>
