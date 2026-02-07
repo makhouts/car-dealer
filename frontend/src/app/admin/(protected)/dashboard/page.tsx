@@ -79,22 +79,34 @@ async function getSoldCarsWithCountdown() {
   }
 }
 
-// Auto cleanup old sold cars
+// Auto cleanup old sold cars - only runs if soldAt field exists
 async function cleanupOldSoldCars() {
   try {
     const threeDaysAgo = new Date()
     threeDaysAgo.setDate(threeDaysAgo.getDate() - 3)
 
-    await prisma.car.deleteMany({
+    // First check if any cars have soldAt field populated
+    const carsWithSoldAt = await prisma.car.findFirst({
       where: {
         status: 'sold',
-        soldAt: {
-          lte: threeDaysAgo,
-        },
+        soldAt: { not: null },
       },
     })
+
+    // Only run cleanup if there are cars with soldAt
+    if (carsWithSoldAt) {
+      await prisma.car.deleteMany({
+        where: {
+          status: 'sold',
+          soldAt: {
+            lte: threeDaysAgo,
+          },
+        },
+      })
+    }
   } catch (error) {
-    console.error('Auto cleanup failed:', error)
+    // Silently fail - soldAt field might not exist yet
+    console.log('Auto cleanup skipped:', error instanceof Error ? error.message : 'Unknown error')
   }
 }
 
