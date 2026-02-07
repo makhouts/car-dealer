@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { TableSkeleton } from '@/components/ui/skeleton'
-import { Plus, Pencil, Trash2, X, ImagePlus, Upload, Link as LinkIcon, CheckCircle, Clock, XCircle } from 'lucide-react'
+import { Plus, Pencil, Trash2, X, ImagePlus, Upload, Link as LinkIcon, CheckCircle, Clock, XCircle, Download, FileUp } from 'lucide-react'
 import { toast } from 'sonner'
 
 interface Car {
