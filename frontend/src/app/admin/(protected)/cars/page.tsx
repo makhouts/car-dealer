@@ -36,6 +36,7 @@ interface Car {
   images: string[]
   isFeatured: boolean
   status: string
+  soldAt?: string
 }
 
 const FUEL_TYPES = ['petrol', 'diesel', 'hybrid', 'electric', 'other']
