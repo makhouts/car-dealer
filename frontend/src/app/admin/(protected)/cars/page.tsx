@@ -276,6 +276,63 @@ export default function AdminCarsPage() {
     }
   }
 
+  // Export cars to CSV
+  const handleExport = async () => {
+    try {
+      const res = await fetch('/api/cars/export')
+      if (res.ok) {
+        const blob = await res.blob()
+        const url = window.URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = `cars-export-${new Date().toISOString().split('T')[0]}.csv`
+        document.body.appendChild(a)
+        a.click()
+        window.URL.revokeObjectURL(url)
+        document.body.removeChild(a)
+        toast.success('Export gedownload!')
+      } else {
+        throw new Error()
+      }
+    } catch {
+      toast.error('Export mislukt')
+    }
+  }
+
+  // Import cars from CSV
+  const handleImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    setImporting(true)
+    const formData = new FormData()
+    formData.append('file', file)
+
+    try {
+      const res = await fetch('/api/cars/import', {
+        method: 'POST',
+        body: formData,
+      })
+
+      if (res.ok) {
+        const result = await res.json()
+        toast.success(`${result.imported} auto's geïmporteerd${result.failed > 0 ? `, ${result.failed} mislukt` : ''}`)
+        fetchCars()
+        router.refresh()
+      } else {
+        const error = await res.json()
+        throw new Error(error.error || 'Import failed')
+      }
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : 'Import mislukt')
+    } finally {
+      setImporting(false)
+      if (csvInputRef.current) {
+        csvInputRef.current.value = ''
+      }
+    }
+  }
+
   return (
     <div className="min-h-screen bg-neutral-100 flex">
       <AdminSidebar />
