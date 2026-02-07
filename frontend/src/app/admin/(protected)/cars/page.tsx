@@ -78,6 +78,7 @@ const emptyCar = {
 export default function AdminCarsPage() {
   const router = useRouter()
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const csvInputRef = useRef<HTMLInputElement>(null)
   const [cars, setCars] = useState<Car[]>([])
   const [loading, setLoading] = useState(true)
   const [dialogOpen, setDialogOpen] = useState(false)
@@ -88,6 +89,7 @@ export default function AdminCarsPage() {
   const [submitting, setSubmitting] = useState(false)
   const [uploading, setUploading] = useState(false)
   const [imageMode, setImageMode] = useState<'upload' | 'url'>('upload')
+  const [importing, setImporting] = useState(false)
 
   useEffect(() => {
     fetchCars()
