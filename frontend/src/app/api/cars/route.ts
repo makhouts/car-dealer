@@ -27,17 +27,29 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const body = await request.json()
-    const validated = carSchema.parse(body)
+    
+    // Remove soldAt from body if present (we'll handle it based on status)
+    const { soldAt: _ignoreSoldAt, ...bodyWithoutSoldAt } = body
+    
+    const validated = carSchema.parse(bodyWithoutSoldAt)
 
     const shortId = generateShortId()
     const slug = generateSlug(validated.brand, validated.model, validated.year, validated.title)
 
+    // Build create data
+    const createData: Record<string, unknown> = {
+      ...validated,
+      shortId,
+      slug,
+    }
+
+    // If status is sold, set soldAt
+    if (validated.status === 'sold') {
+      createData.soldAt = new Date()
+    }
+
     const car = await prisma.car.create({
-      data: {
-        ...validated,
-        shortId,
-        slug,
-      },
+      data: createData,
     })
 
     return NextResponse.json(car, { status: 201 })
