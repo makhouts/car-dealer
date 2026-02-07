@@ -477,6 +477,19 @@ export default function AdminCarsPage() {
                             })}
                           </div>
                         </div>
+                        {/* Delete Countdown for sold cars */}
+                        {car.status === 'sold' && car.soldAt && (() => {
+                          const countdown = getDeleteCountdown(car.soldAt)
+                          if (!countdown) return null
+                          return (
+                            <div className={`mt-1.5 flex items-center gap-1 text-xs ${
+                              countdown.isUrgent ? 'text-red-600 font-medium' : 'text-neutral-500'
+                            }`}>
+                              <Trash2 className="w-3 h-3" />
+                              <span>Verwijderd in {countdown.text}</span>
+                            </div>
+                          )
+                        })()}
                       </td>
                       <td className="p-4">{car.isFeatured && <span className="text-amber-500 text-lg">★</span>}</td>
                       <td className="p-4">
