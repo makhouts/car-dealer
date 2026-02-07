@@ -33,11 +33,27 @@ export async function PUT(
 
     const slug = generateSlug(validated.brand, validated.model, validated.year, validated.title)
 
+    // Get current car to check status change
+    const currentCar = await prisma.car.findUnique({ where: { id } })
+    
+    // Determine soldAt value
+    let soldAt = currentCar?.soldAt || null
+    
+    // If status is changing TO sold, set soldAt
+    if (validated.status === 'sold' && currentCar?.status !== 'sold') {
+      soldAt = new Date()
+    }
+    // If status is changing FROM sold to something else, clear soldAt
+    else if (validated.status !== 'sold' && currentCar?.status === 'sold') {
+      soldAt = null
+    }
+
     const car = await prisma.car.update({
       where: { id },
       data: {
         ...validated,
         slug,
+        soldAt,
       },
     })
 
