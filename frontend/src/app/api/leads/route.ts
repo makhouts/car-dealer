@@ -29,9 +29,19 @@ export async function POST(request: Request) {
   }
 }
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
+    const { searchParams } = new URL(request.url)
+    const filter = searchParams.get('filter') // 'new', 'handled', or null for all
+
+    const where = filter === 'new' 
+      ? { handled: false }
+      : filter === 'handled'
+      ? { handled: true }
+      : {}
+
     const leads = await prisma.lead.findMany({
+      where,
       include: { car: true },
       orderBy: { createdAt: 'desc' },
     })
