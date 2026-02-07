@@ -43,19 +43,26 @@ async function getRecentLeads() {
 
 async function getSoldCarsWithCountdown() {
   try {
+    // First try to get sold cars with soldAt - if field doesn't exist, this will throw
     const soldCars = await prisma.car.findMany({
       where: {
         status: 'sold',
-        soldAt: { not: null },
       },
-      orderBy: { soldAt: 'asc' },
+      orderBy: { createdAt: 'desc' },
       take: 10,
     })
+
+    // Filter to only cars that have soldAt
+    const carsWithSoldAt = soldCars.filter(car => car.soldAt)
+    
+    if (carsWithSoldAt.length === 0) {
+      return []
+    }
 
     const now = new Date()
     const threeDaysInMs = 3 * 24 * 60 * 60 * 1000
 
-    return soldCars.map(car => {
+    return carsWithSoldAt.map(car => {
       const soldAt = car.soldAt ? new Date(car.soldAt) : now
       const deleteAt = new Date(soldAt.getTime() + threeDaysInMs)
       const remainingMs = deleteAt.getTime() - now.getTime()
@@ -74,7 +81,8 @@ async function getSoldCarsWithCountdown() {
         isUrgent: remainingMs > 0 && remainingMs < 24 * 60 * 60 * 1000, // Less than 24 hours
       }
     })
-  } catch {
+  } catch (error) {
+    console.log('getSoldCarsWithCountdown skipped:', error instanceof Error ? error.message : 'Unknown error')
     return []
   }
 }
