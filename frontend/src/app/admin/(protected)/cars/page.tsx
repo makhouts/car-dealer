@@ -343,9 +343,42 @@ export default function AdminCarsPage() {
               <h1 className="text-3xl font-bold text-neutral-900">Auto's</h1>
               <p className="text-neutral-600">Beheer je voorraad</p>
             </div>
-            <Button onClick={() => openDialog()} className="gap-2">
-              <Plus className="w-4 h-4" /> Auto Toevoegen
-            </Button>
+            <div className="flex items-center gap-3">
+              {/* Import CSV */}
+              <input
+                ref={csvInputRef}
+                type="file"
+                accept=".csv"
+                onChange={handleImport}
+                className="hidden"
+                id="csv-import"
+              />
+              <Button 
+                variant="outline" 
+                onClick={() => csvInputRef.current?.click()}
+                disabled={importing}
+                className="gap-2"
+              >
+                <FileUp className="w-4 h-4" />
+                {importing ? 'Importeren...' : 'Import CSV'}
+              </Button>
+              
+              {/* Export CSV */}
+              <Button 
+                variant="outline" 
+                onClick={handleExport}
+                className="gap-2"
+                disabled={cars.length === 0}
+              >
+                <Download className="w-4 h-4" />
+                Export CSV
+              </Button>
+              
+              {/* Add Car */}
+              <Button onClick={() => openDialog()} className="gap-2">
+                <Plus className="w-4 h-4" /> Auto Toevoegen
+              </Button>
+            </div>
           </div>
 
           {/* Cars Table */}
