@@ -51,6 +51,29 @@ const STATUS_CONFIG = {
   sold: { label: 'Verkocht', icon: XCircle, bg: 'bg-neutral-200', text: 'text-neutral-700', hover: 'hover:bg-neutral-300' },
 }
 
+// Calculate time remaining until auto-delete (3 days after soldAt)
+function getDeleteCountdown(soldAt?: string): { text: string; isUrgent: boolean } | null {
+  if (!soldAt) return null
+  
+  const soldDate = new Date(soldAt)
+  const deleteAt = new Date(soldDate.getTime() + 3 * 24 * 60 * 60 * 1000)
+  const now = new Date()
+  const remainingMs = deleteAt.getTime() - now.getTime()
+  
+  if (remainingMs <= 0) {
+    return { text: 'Wordt verwijderd...', isUrgent: true }
+  }
+  
+  const remainingHours = Math.floor(remainingMs / (1000 * 60 * 60))
+  const remainingDays = Math.floor(remainingHours / 24)
+  const hours = remainingHours % 24
+  
+  const isUrgent = remainingMs < 24 * 60 * 60 * 1000 // Less than 24 hours
+  const text = remainingDays > 0 ? `${remainingDays}d ${hours}u` : `${hours}u`
+  
+  return { text, isUrgent }
+}
+
 const emptyCar = {
   title: '',
   brand: '',
