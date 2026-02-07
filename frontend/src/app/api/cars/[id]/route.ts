@@ -29,32 +29,35 @@ export async function PUT(
   try {
     const { id } = await params
     const body = await request.json()
-    const validated = carSchema.parse(body)
-
+    
+    // Remove soldAt from body if present (we'll handle it separately)
+    const { soldAt: _ignoreSoldAt, ...bodyWithoutSoldAt } = body
+    
+    const validated = carSchema.parse(bodyWithoutSoldAt)
     const slug = generateSlug(validated.brand, validated.model, validated.year, validated.title)
 
     // Get current car to check status change
     const currentCar = await prisma.car.findUnique({ where: { id } })
     
-    // Determine soldAt value
-    let soldAt = currentCar?.soldAt || null
+    // Build update data
+    const updateData: Record<string, unknown> = {
+      ...validated,
+      slug,
+    }
     
-    // If status is changing TO sold, set soldAt
+    // Handle soldAt based on status change
     if (validated.status === 'sold' && currentCar?.status !== 'sold') {
-      soldAt = new Date()
+      // Status changed TO sold - set soldAt
+      updateData.soldAt = new Date()
+    } else if (validated.status !== 'sold' && currentCar?.status === 'sold') {
+      // Status changed FROM sold - clear soldAt
+      updateData.soldAt = null
     }
-    // If status is changing FROM sold to something else, clear soldAt
-    else if (validated.status !== 'sold' && currentCar?.status === 'sold') {
-      soldAt = null
-    }
+    // If status didn't change, don't touch soldAt
 
     const car = await prisma.car.update({
       where: { id },
-      data: {
-        ...validated,
-        slug,
-        soldAt,
-      },
+      data: updateData,
     })
 
     return NextResponse.json(car)
