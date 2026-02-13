@@ -124,13 +124,13 @@ export function InventoryContent({ initialCars, brands }: InventoryContentProps)
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold text-neutral-900 mb-2">{t('title')}</h1>
-        <p className="text-lg text-neutral-600">{t('subtitle')}</p>
+      <div className="mb-12">
+        <h1 className="text-5xl font-bold text-neutral-900 mb-4">{t('title')}</h1>
+        <p className="text-xl text-neutral-600">{t('subtitle')}</p>
       </div>
 
       {/* Search and Sort Bar */}
-      <div className="flex flex-col md:flex-row gap-4 mb-8">
+      <div className="flex flex-col md:flex-row gap-4 mb-10">
         <div className="relative flex-1">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-400" />
           <Input
@@ -138,11 +138,11 @@ export function InventoryContent({ initialCars, brands }: InventoryContentProps)
             placeholder={tCommon('search')}
             value={searchTerm}
             onChange={(e) => { setSearchTerm(e.target.value); setCurrentPage(1) }}
-            className="pl-12"
+            className="pl-12 h-12"
           />
         </div>
         <Select value={sortBy} onValueChange={setSortBy}>
-          <SelectTrigger className="w-full md:w-48">
+          <SelectTrigger className="w-full md:w-56 h-12">
             <SelectValue placeholder={tCommon('sort')} />
           </SelectTrigger>
           <SelectContent>
@@ -154,7 +154,7 @@ export function InventoryContent({ initialCars, brands }: InventoryContentProps)
         </Select>
         <Button
           variant="outline"
-          className="md:hidden gap-2"
+          className="md:hidden gap-2 h-12"
           onClick={() => setShowFilters(!showFilters)}
         >
           <SlidersHorizontal className="w-4 h-4" />
@@ -162,20 +162,20 @@ export function InventoryContent({ initialCars, brands }: InventoryContentProps)
         </Button>
       </div>
 
-      <div className="flex gap-8">
+      <div className="flex gap-10">
         {/* Filters Sidebar */}
-        <aside className={`${showFilters ? 'block' : 'hidden'} md:block w-full md:w-72 flex-shrink-0`}>
-          <div className="bg-white rounded-xl p-6 shadow-sm sticky top-24">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="font-semibold text-neutral-900">{tCommon('filter')}</h3>
+        <aside className={`${showFilters ? 'block' : 'hidden'} md:block w-full md:w-80 flex-shrink-0`}>
+          <div className="bg-white rounded-2xl p-8 shadow-md border border-neutral-100 sticky top-28">
+            <div className="flex items-center justify-between mb-8">
+              <h3 className="text-lg font-bold text-neutral-900">{tCommon('filter')}</h3>
               {hasActiveFilters && (
-                <button onClick={clearFilters} className="text-sm text-red-600 hover:text-red-700">
+                <button onClick={clearFilters} className="text-sm font-medium text-red-600 hover:text-red-700 transition-colors">
                   {tCommon('clear')}
                 </button>
               )}
             </div>
 
-            <div className="space-y-6">
+            <div className="space-y-8">
               {/* Brand */}
               <div>
                 <label className="block text-sm font-medium text-neutral-700 mb-2">{t('filters.brand')}</label>
@@ -267,13 +267,13 @@ export function InventoryContent({ initialCars, brands }: InventoryContentProps)
 
         {/* Cars Grid */}
         <main className="flex-1">
-          <p className="text-sm text-neutral-600 mb-4">
+          <p className="text-sm font-medium text-neutral-600 mb-6">
             {t('results', { count: filteredCars.length })}
           </p>
 
           {paginatedCars.length > 0 ? (
             <>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {paginatedCars.map((car) => (
                   <CarCard key={car.id} car={car} />
                 ))}
@@ -281,21 +281,23 @@ export function InventoryContent({ initialCars, brands }: InventoryContentProps)
 
               {/* Pagination */}
               {totalPages > 1 && (
-                <div className="flex items-center justify-center gap-2 mt-12">
+                <div className="flex items-center justify-center gap-3 mt-16">
                   <Button
                     variant="outline"
                     onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
                     disabled={currentPage === 1}
+                    className="px-6"
                   >
                     {tCommon('previous')}
                   </Button>
-                  <span className="px-4 text-sm text-neutral-600">
+                  <span className="px-6 py-2 text-sm font-medium text-neutral-700 bg-white rounded-lg border border-neutral-200">
                     {currentPage} / {totalPages}
                   </span>
                   <Button
                     variant="outline"
                     onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
                     disabled={currentPage === totalPages}
+                    className="px-6"
                   >
                     {tCommon('next')}
                   </Button>
@@ -303,10 +305,10 @@ export function InventoryContent({ initialCars, brands }: InventoryContentProps)
               )}
             </>
           ) : (
-            <div className="text-center py-20 bg-white rounded-xl">
-              <p className="text-neutral-500">{t('noResults')}</p>
+            <div className="text-center py-24 bg-white rounded-2xl border border-neutral-100">
+              <p className="text-lg text-neutral-500 mb-2">{t('noResults')}</p>
               {hasActiveFilters && (
-                <Button variant="outline" className="mt-4" onClick={clearFilters}>
+                <Button variant="outline" className="mt-6" onClick={clearFilters}>
                   {tCommon('clear')} {tCommon('filter').toLowerCase()}
                 </Button>
               )}

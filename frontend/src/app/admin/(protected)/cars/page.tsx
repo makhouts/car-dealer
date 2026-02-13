@@ -121,7 +121,12 @@ export default function AdminCarsPage() {
 
   const fetchCars = async () => {
     try {
-      const res = await fetch('/api/cars')
+      const res = await fetch('/api/cars', {
+        cache: 'no-store',
+        headers: {
+          'Cache-Control': 'no-cache',
+        },
+      })
       if (res.ok) {
         setCars(await res.json())
       }
