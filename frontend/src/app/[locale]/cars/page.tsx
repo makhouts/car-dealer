@@ -52,7 +52,7 @@ export default async function InventoryPage() {
   return (
     <div className="min-h-screen bg-neutral-50">
       <Header variant="light" />
-      <main className="py-12">
+      <main className="pt-32 pb-16">
         <InventoryContent initialCars={cars} brands={brands} />
       </main>
       <Footer />

@@ -48,7 +48,7 @@ export default async function HomePage() {
   return (
     <div className="min-h-screen bg-zinc-950">
       <Header />
-      <main>
+      <main className="pt-20">
         <HeroSection />
         <FeaturedCarsSection cars={featuredCars} />
         <BenefitsSection />
