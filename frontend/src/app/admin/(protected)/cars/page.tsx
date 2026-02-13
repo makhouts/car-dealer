@@ -239,10 +239,36 @@ export default function AdminCarsPage() {
       const url = editingCar ? `/api/cars/${editingCar.id}` : '/api/cars'
       const method = editingCar ? 'PUT' : 'POST'
 
+      // Clean the form data - ensure proper types and remove empty optional fields
+      const cleanedData = {
+        title: formData.title,
+        brand: formData.brand,
+        model: formData.model,
+        year: Number(formData.year),
+        price: Number(formData.price),
+        mileage: Number(formData.mileage),
+        fuelType: formData.fuelType,
+        transmission: formData.transmission,
+        bodyType: formData.bodyType,
+        condition: formData.condition,
+        colorExterior: formData.colorExterior,
+        colorInterior: formData.colorInterior || undefined,
+        powerHP: formData.powerHP ? Number(formData.powerHP) : undefined,
+        engine: formData.engine || undefined,
+        drivetrain: formData.drivetrain || undefined,
+        seats: formData.seats ? Number(formData.seats) : undefined,
+        doors: formData.doors ? Number(formData.doors) : undefined,
+        features: formData.features || [],
+        description: formData.description,
+        images: formData.images || [],
+        isFeatured: Boolean(formData.isFeatured),
+        status: formData.status,
+      }
+
       const res = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(cleanedData),
       })
 
       if (res.ok) {
