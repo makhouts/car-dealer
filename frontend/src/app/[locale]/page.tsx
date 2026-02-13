@@ -8,6 +8,10 @@ import { BenefitsSection } from './components/benefits-section'
 import { TestimonialsSection } from './components/testimonials-section'
 import { CTASection } from './components/cta-section'
 
+// Disable caching for this page to show real-time updates
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'hero' })
