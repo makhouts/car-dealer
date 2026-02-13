@@ -3,6 +3,10 @@ import { prisma } from '@/lib/prisma'
 import { carSchema } from '@/lib/validations'
 import { generateSlug } from '@/lib/utils'
 
+// Disable caching for this route
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
