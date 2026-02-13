@@ -124,13 +124,13 @@ export function InventoryContent({ initialCars, brands }: InventoryContentProps)
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold text-neutral-900 mb-2">{t('title')}</h1>
-        <p className="text-lg text-neutral-600">{t('subtitle')}</p>
+      <div className="mb-12">
+        <h1 className="text-5xl font-bold text-neutral-900 mb-4">{t('title')}</h1>
+        <p className="text-xl text-neutral-600">{t('subtitle')}</p>
       </div>
 
       {/* Search and Sort Bar */}
-      <div className="flex flex-col md:flex-row gap-4 mb-8">
+      <div className="flex flex-col md:flex-row gap-4 mb-10">
         <div className="relative flex-1">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-400" />
           <Input
@@ -138,11 +138,11 @@ export function InventoryContent({ initialCars, brands }: InventoryContentProps)
             placeholder={tCommon('search')}
             value={searchTerm}
             onChange={(e) => { setSearchTerm(e.target.value); setCurrentPage(1) }}
-            className="pl-12"
+            className="pl-12 h-12"
           />
         </div>
         <Select value={sortBy} onValueChange={setSortBy}>
-          <SelectTrigger className="w-full md:w-48">
+          <SelectTrigger className="w-full md:w-56 h-12">
             <SelectValue placeholder={tCommon('sort')} />
           </SelectTrigger>
           <SelectContent>
@@ -154,7 +154,7 @@ export function InventoryContent({ initialCars, brands }: InventoryContentProps)
         </Select>
         <Button
           variant="outline"
-          className="md:hidden gap-2"
+          className="md:hidden gap-2 h-12"
           onClick={() => setShowFilters(!showFilters)}
         >
           <SlidersHorizontal className="w-4 h-4" />
@@ -162,20 +162,20 @@ export function InventoryContent({ initialCars, brands }: InventoryContentProps)
         </Button>
       </div>
 
-      <div className="flex gap-8">
+      <div className="flex gap-10">
         {/* Filters Sidebar */}
-        <aside className={`${showFilters ? 'block' : 'hidden'} md:block w-full md:w-72 flex-shrink-0`}>
-          <div className="bg-white rounded-xl p-6 shadow-sm sticky top-24">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="font-semibold text-neutral-900">{tCommon('filter')}</h3>
+        <aside className={`${showFilters ? 'block' : 'hidden'} md:block w-full md:w-80 flex-shrink-0`}>
+          <div className="bg-white rounded-2xl p-8 shadow-md border border-neutral-100 sticky top-28">
+            <div className="flex items-center justify-between mb-8">
+              <h3 className="text-lg font-bold text-neutral-900">{tCommon('filter')}</h3>
               {hasActiveFilters && (
-                <button onClick={clearFilters} className="text-sm text-red-600 hover:text-red-700">
+                <button onClick={clearFilters} className="text-sm font-medium text-red-600 hover:text-red-700 transition-colors">
                   {tCommon('clear')}
                 </button>
               )}
             </div>
 
-            <div className="space-y-6">
+            <div className="space-y-8">
               {/* Brand */}
               <div>
                 <label className="block text-sm font-medium text-neutral-700 mb-2">{t('filters.brand')}</label>
