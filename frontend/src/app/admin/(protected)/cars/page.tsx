@@ -239,10 +239,36 @@ export default function AdminCarsPage() {
       const url = editingCar ? `/api/cars/${editingCar.id}` : '/api/cars'
       const method = editingCar ? 'PUT' : 'POST'
 
+      // Clean the form data - ensure proper types and remove empty optional fields
+      const cleanedData = {
+        title: formData.title,
+        brand: formData.brand,
+        model: formData.model,
+        year: Number(formData.year),
+        price: Number(formData.price),
+        mileage: Number(formData.mileage),
+        fuelType: formData.fuelType,
+        transmission: formData.transmission,
+        bodyType: formData.bodyType,
+        condition: formData.condition,
+        colorExterior: formData.colorExterior,
+        colorInterior: formData.colorInterior || undefined,
+        powerHP: formData.powerHP ? Number(formData.powerHP) : undefined,
+        engine: formData.engine || undefined,
+        drivetrain: formData.drivetrain || undefined,
+        seats: formData.seats ? Number(formData.seats) : undefined,
+        doors: formData.doors ? Number(formData.doors) : undefined,
+        features: formData.features || [],
+        description: formData.description,
+        images: formData.images || [],
+        isFeatured: Boolean(formData.isFeatured),
+        status: formData.status,
+      }
+
       const res = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(cleanedData),
       })
 
       if (res.ok) {
@@ -283,10 +309,36 @@ export default function AdminCarsPage() {
       const car = cars.find(c => c.id === carId)
       if (!car) return
 
+      // Clean the data - remove fields that shouldn't be sent and ensure proper types
+      const cleanedData = {
+        title: car.title,
+        brand: car.brand,
+        model: car.model,
+        year: Number(car.year),
+        price: Number(car.price),
+        mileage: Number(car.mileage),
+        fuelType: car.fuelType,
+        transmission: car.transmission,
+        bodyType: car.bodyType,
+        condition: car.condition,
+        colorExterior: car.colorExterior,
+        colorInterior: car.colorInterior || undefined,
+        powerHP: car.powerHP ? Number(car.powerHP) : undefined,
+        engine: car.engine || undefined,
+        drivetrain: car.drivetrain || undefined,
+        seats: car.seats ? Number(car.seats) : undefined,
+        doors: car.doors ? Number(car.doors) : undefined,
+        features: car.features || [],
+        description: car.description,
+        images: car.images || [],
+        isFeatured: Boolean(car.isFeatured),
+        status: newStatus,
+      }
+
       const res = await fetch(`/api/cars/${carId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...car, status: newStatus }),
+        body: JSON.stringify(cleanedData),
       })
 
       if (res.ok) {
