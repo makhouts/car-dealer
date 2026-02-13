@@ -4,6 +4,10 @@ import { prisma } from '@/lib/prisma'
 import { Header, Footer, WhatsAppButton } from '@/components/layout'
 import { InventoryContent } from './components/inventory-content'
 
+// Disable caching for this page to show real-time updates
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'inventory' })
