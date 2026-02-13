@@ -533,7 +533,7 @@ export default function AdminCarsPage() {
 
               <div>
                 <label className="block text-sm font-medium mb-2">Titel *</label>
-                <Input value={formData.title} onChange={(e) => setFormData({ ...formData, title: e.target.value })} placeholder="bijv. BMW 330i M Sport 2020" required />
+                <Input value={`${formData.brand} ${formData.model}`} onChange={(e) => setFormData({ ...formData, title: e.target.value })} placeholder="bijv. BMW 330i M Sport 2020" required />
               </div>
 
               <div className="grid grid-cols-3 gap-4">
