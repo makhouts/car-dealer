@@ -7,6 +7,10 @@ import { Header, Footer, WhatsAppButton } from '@/components/layout'
 import { CarDetailContent } from './components/car-detail-content'
 import { SimilarCars } from './components/similar-cars'
 
+// Disable caching for this page to show real-time updates
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 interface CarPageProps {
   params: Promise<{ locale: string; slug: string }>
 }
