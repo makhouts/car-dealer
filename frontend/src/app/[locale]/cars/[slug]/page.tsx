@@ -91,7 +91,7 @@ export default async function CarPage({ params }: CarPageProps) {
   return (
     <div className="min-h-screen bg-neutral-50">
       <Header variant="light" />
-      <main className="py-8">
+      <main className="pt-28 pb-16">
         <CarDetailContent car={car} />
         {similarCars.length > 0 && <SimilarCars cars={similarCars} />}
       </main>
