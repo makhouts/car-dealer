@@ -267,13 +267,13 @@ export function InventoryContent({ initialCars, brands }: InventoryContentProps)
 
         {/* Cars Grid */}
         <main className="flex-1">
-          <p className="text-sm text-neutral-600 mb-4">
+          <p className="text-sm font-medium text-neutral-600 mb-6">
             {t('results', { count: filteredCars.length })}
           </p>
 
           {paginatedCars.length > 0 ? (
             <>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {paginatedCars.map((car) => (
                   <CarCard key={car.id} car={car} />
                 ))}
@@ -281,21 +281,23 @@ export function InventoryContent({ initialCars, brands }: InventoryContentProps)
 
               {/* Pagination */}
               {totalPages > 1 && (
-                <div className="flex items-center justify-center gap-2 mt-12">
+                <div className="flex items-center justify-center gap-3 mt-16">
                   <Button
                     variant="outline"
                     onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
                     disabled={currentPage === 1}
+                    className="px-6"
                   >
                     {tCommon('previous')}
                   </Button>
-                  <span className="px-4 text-sm text-neutral-600">
+                  <span className="px-6 py-2 text-sm font-medium text-neutral-700 bg-white rounded-lg border border-neutral-200">
                     {currentPage} / {totalPages}
                   </span>
                   <Button
                     variant="outline"
                     onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
                     disabled={currentPage === totalPages}
+                    className="px-6"
                   >
                     {tCommon('next')}
                   </Button>
@@ -303,10 +305,10 @@ export function InventoryContent({ initialCars, brands }: InventoryContentProps)
               )}
             </>
           ) : (
-            <div className="text-center py-20 bg-white rounded-xl">
-              <p className="text-neutral-500">{t('noResults')}</p>
+            <div className="text-center py-24 bg-white rounded-2xl border border-neutral-100">
+              <p className="text-lg text-neutral-500 mb-2">{t('noResults')}</p>
               {hasActiveFilters && (
-                <Button variant="outline" className="mt-4" onClick={clearFilters}>
+                <Button variant="outline" className="mt-6" onClick={clearFilters}>
                   {tCommon('clear')} {tCommon('filter').toLowerCase()}
                 </Button>
               )}
