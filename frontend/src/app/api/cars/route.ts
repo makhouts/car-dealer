@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+import { Prisma } from '@prisma/client'
 import { carSchema } from '@/lib/validations'
 import { generateShortId, generateSlug } from '@/lib/utils'
 
@@ -31,25 +32,21 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const body = await request.json()
-    
+
     // Remove soldAt from body if present (we'll handle it based on status)
     const { soldAt: _ignoreSoldAt, ...bodyWithoutSoldAt } = body
-    
+
     const validated = carSchema.parse(bodyWithoutSoldAt)
 
     const shortId = generateShortId()
     const slug = generateSlug(validated.brand, validated.model, validated.year, validated.title)
 
-    // Build create data
-    const createData: Record<string, unknown> = {
+    // Build create data with proper typing
+    const createData: Prisma.CarCreateInput = {
       ...validated,
       shortId,
       slug,
-    }
-
-    // If status is sold, set soldAt
-    if (validated.status === 'sold') {
-      createData.soldAt = new Date()
+      ...(validated.status === 'sold' && { soldAt: new Date() }),
     }
 
     const car = await prisma.car.create({

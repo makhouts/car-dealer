@@ -120,7 +120,7 @@ export default function AdminLeadsPage() {
 
   return (
     <div className="min-h-screen bg-neutral-100 flex">
-      <AdminSidebar leads={counts} />
+      <AdminSidebar />
       <main className="flex-1 p-8">
         <div className="max-w-6xl mx-auto">
           <div className="mb-8">
