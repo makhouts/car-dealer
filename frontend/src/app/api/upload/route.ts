@@ -1,8 +1,9 @@
 import { NextResponse } from 'next/server'
-import { writeFile, mkdir } from 'fs/promises'
-import { existsSync } from 'fs'
-import path from 'path'
-import { nanoid } from 'nanoid'
+import { v2 as cloudinary } from 'cloudinary'
+
+cloudinary.config({
+  cloudinary_url: process.env.CLOUDINARY_URL
+})
 
 export async function POST(request: Request) {
   try {
@@ -11,12 +12,6 @@ export async function POST(request: Request) {
 
     if (!files || files.length === 0) {
       return NextResponse.json({ error: 'No files uploaded' }, { status: 400 })
-    }
-
-    // Create uploads directory if it doesn't exist
-    const uploadDir = path.join(process.cwd(), 'public', 'uploads')
-    if (!existsSync(uploadDir)) {
-      await mkdir(uploadDir, { recursive: true })
     }
 
     const uploadedUrls: string[] = []
@@ -32,18 +27,32 @@ export async function POST(request: Request) {
         continue
       }
 
-      // Generate unique filename
-      const ext = file.name.split('.').pop() || 'jpg'
-      const filename = `${nanoid(10)}.${ext}`
-      const filepath = path.join(uploadDir, filename)
-
-      // Convert file to buffer and save
+      // Convert file to buffer
       const bytes = await file.arrayBuffer()
       const buffer = Buffer.from(bytes)
-      await writeFile(filepath, buffer)
 
-      // Return the public URL
-      uploadedUrls.push(`/uploads/${filename}`)
+      // Upload to Cloudinary
+      const result = await new Promise<any>((resolve, reject) => {
+        const uploadStream = cloudinary.uploader.upload_stream(
+          {
+            folder: 'carcity',
+            resource_type: 'image',
+            transformation: [
+              { width: 1920, height: 1080, crop: 'limit' },
+              { quality: 'auto:good' },
+              { fetch_format: 'auto' },
+            ],
+          },
+          (error, result) => {
+            if (error) reject(error)
+            else resolve(result)
+          }
+        )
+
+        uploadStream.end(buffer)
+      })
+
+      uploadedUrls.push(result.secure_url)
     }
 
     if (uploadedUrls.length === 0) {
