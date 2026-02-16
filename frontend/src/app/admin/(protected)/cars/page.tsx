@@ -340,6 +340,7 @@ export default function AdminCarsPage() {
         features: car.features || [],
         description: car.description,
         images: car.images || [],
+        carPassUrl: car.carPassUrl || undefined,
         isFeatured: Boolean(car.isFeatured),
         status: newStatus,
       }
