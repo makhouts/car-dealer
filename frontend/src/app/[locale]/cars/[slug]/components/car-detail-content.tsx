@@ -195,6 +195,20 @@ export function CarDetailContent({ car }: CarDetailContentProps) {
               <span className="bg-neutral-100 text-neutral-700 px-3 py-1 rounded-full text-sm">{t(`transmissions.${car.transmission}`)}</span>
             </div>
 
+            {/* Car Pass Button */}
+            {car.carPassUrl && (
+              <div className="mb-6">
+                <a
+                  href={car.carPassUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center w-full px-6 py-3 bg-[#B5946A] hover:bg-[#A38559] text-white font-semibold rounded-xl transition-colors shadow-sm"
+                >
+                  {locale === 'nl' ? '📄 Bekijk Car Pass' : '📄 View Car Pass'}
+                </a>
+              </div>
+            )}
+
             {car.status === 'available' && (
               <div className="border-t border-neutral-200 pt-6">
                 <h3 className="font-semibold text-neutral-900 mb-4">{t('requestInfo')}</h3>
