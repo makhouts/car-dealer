@@ -169,7 +169,7 @@ export function InventoryContent({ initialCars, brands }: InventoryContentProps)
             <div className="flex items-center justify-between mb-8">
               <h3 className="text-lg font-bold text-neutral-900">{tCommon('filter')}</h3>
               {hasActiveFilters && (
-                <button onClick={clearFilters} className="text-sm font-medium text-red-600 hover:text-red-700 transition-colors">
+                <button onClick={clearFilters} className="text-sm font-medium text-[#B5946A] hover:text-[#A38559] transition-colors">
                   {tCommon('clear')}
                 </button>
               )}
