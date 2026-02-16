@@ -126,7 +126,7 @@ export function CarDetailContent({ car }: CarDetailContentProps) {
                     key={index}
                     onClick={() => setSelectedImage(index)}
                     className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all ${
-                      selectedImage === index ? 'border-red-600' : 'border-transparent opacity-60 hover:opacity-100'
+                      selectedImage === index ? 'border-[#B5946A]' : 'border-transparent opacity-60 hover:opacity-100'
                     }`}
                   >
                     <img src={img} alt={`View ${index + 1}`} className="w-full h-full object-cover" />
