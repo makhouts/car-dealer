@@ -34,6 +34,7 @@ interface Car {
   features: string[]
   description: string
   images: string[]
+  carPassUrl?: string
   isFeatured: boolean
   status: string
   soldAt?: string
@@ -95,6 +96,7 @@ const emptyCar = {
   features: [] as string[],
   description: '',
   images: [] as string[],
+  carPassUrl: '',
   isFeatured: false,
   status: 'available',
 }
@@ -161,6 +163,7 @@ export default function AdminCarsPage() {
         features: car.features,
         description: car.description,
         images: car.images,
+        carPassUrl: car.carPassUrl || '',
         isFeatured: car.isFeatured,
         status: car.status,
       })
@@ -266,6 +269,7 @@ export default function AdminCarsPage() {
         features: formData.features || [],
         description: formData.description,
         images: formData.images || [],
+        carPassUrl: formData.carPassUrl || undefined,
         isFeatured: Boolean(formData.isFeatured),
         status: formData.status,
       }
@@ -336,6 +340,7 @@ export default function AdminCarsPage() {
         features: car.features || [],
         description: car.description,
         images: car.images || [],
+        carPassUrl: car.carPassUrl || undefined,
         isFeatured: Boolean(car.isFeatured),
         status: newStatus,
       }
@@ -497,7 +502,7 @@ export default function AdminCarsPage() {
                         </div>
                       </td>
                       <td className="p-4 font-mono">{car.year}</td>
-                      <td className="p-4 font-mono text-red-600">€{car.price.toLocaleString()}</td>
+                      <td className="p-4 font-mono text-[#B5946A] font-semibold">€{car.price.toLocaleString()}</td>
                       <td className="p-4">
                         {/* Quick Status Dropdown */}
                         <div className="relative group">
@@ -657,6 +662,18 @@ export default function AdminCarsPage() {
               <div>
                 <label className="block text-sm font-medium mb-2">Beschrijving *</label>
                 <Textarea value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} rows={4} required />
+              </div>
+
+              {/* Car Pass URL */}
+              <div>
+                <label className="block text-sm font-medium mb-2">Car Pass URL (België)</label>
+                <Input 
+                  type="url" 
+                  value={formData.carPassUrl} 
+                  onChange={(e) => setFormData({ ...formData, carPassUrl: e.target.value })} 
+                  placeholder="https://..." 
+                />
+                <p className="text-xs text-neutral-500 mt-1">Link naar de officiële Car Pass voor Belgische voertuigen</p>
               </div>
 
               {/* Features */}

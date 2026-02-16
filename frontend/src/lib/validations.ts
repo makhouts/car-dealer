@@ -21,6 +21,7 @@ export const carSchema = z.object({
   features: z.array(z.string()).default([]),
   description: z.string().min(1, 'Description is required'),
   images: z.array(z.string()).default([]),
+  carPassUrl: z.string().url('Must be a valid URL').optional().or(z.literal('')),
   isFeatured: z.boolean().default(false),
   status: z.enum(['available', 'reserved', 'sold']).default('available'),
 })

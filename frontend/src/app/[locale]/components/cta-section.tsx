@@ -9,17 +9,17 @@ export function CTASection() {
   const t = useTranslations('cta')
 
   return (
-    <section className="py-24 bg-red-600">
+    <section className="py-24 bg-[#B5946A]">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 className="text-4xl font-bold text-white mb-4">
           {t('title')}
         </h2>
-        <p className="text-xl text-red-100 mb-10">
+        <p className="text-xl text-white/90 mb-10">
           {t('subtitle')}
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Link href="/cars">
-            <Button size="lg" className="bg-white text-red-600 hover:bg-neutral-100 gap-2">
+            <Button size="lg" className="bg-white text-[#B5946A] hover:bg-neutral-100 gap-2">
               {t('browse')}
               <ArrowRight className="w-5 h-5" />
             </Button>

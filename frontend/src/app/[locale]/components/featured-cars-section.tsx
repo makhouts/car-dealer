@@ -21,7 +21,7 @@ export function FeaturedCarsSection({ cars }: FeaturedCarsSectionProps) {
       <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12">
         <div className="flex items-end justify-between mb-16">
           <div>
-            <p className="text-red-500 font-semibold mb-3 tracking-widest text-sm uppercase">Featured</p>
+            <p className="text-[#B5946A] font-semibold mb-3 tracking-widest text-sm uppercase">Featured</p>
             <h2 className="text-5xl md:text-6xl font-bold text-white">{t('title')}</h2>
           </div>
           <Link 

@@ -126,7 +126,7 @@ export function CarDetailContent({ car }: CarDetailContentProps) {
                     key={index}
                     onClick={() => setSelectedImage(index)}
                     className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all ${
-                      selectedImage === index ? 'border-red-600' : 'border-transparent opacity-60 hover:opacity-100'
+                      selectedImage === index ? 'border-[#B5946A]' : 'border-transparent opacity-60 hover:opacity-100'
                     }`}
                   >
                     <img src={img} alt={`View ${index + 1}`} className="w-full h-full object-cover" />
@@ -184,7 +184,7 @@ export function CarDetailContent({ car }: CarDetailContentProps) {
             <div className="mb-6">
               <p className="text-neutral-500">{car.brand}</p>
               <h1 className="text-2xl font-bold text-neutral-900">{car.title}</h1>
-              <p className="text-3xl font-bold text-red-600 font-mono mt-2">
+              <p className="text-3xl font-bold text-[#B5946A] font-mono mt-2">
                 {formatPrice(car.price, locale)}
               </p>
             </div>
@@ -194,6 +194,20 @@ export function CarDetailContent({ car }: CarDetailContentProps) {
               <span className="bg-neutral-100 text-neutral-700 px-3 py-1 rounded-full text-sm font-mono">{formatMileage(car.mileage, locale)}</span>
               <span className="bg-neutral-100 text-neutral-700 px-3 py-1 rounded-full text-sm">{t(`transmissions.${car.transmission}`)}</span>
             </div>
+
+            {/* Car Pass Button */}
+            {car.carPassUrl && (
+              <div className="mb-6">
+                <a
+                  href={car.carPassUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center w-full px-6 py-3 bg-[#B5946A] hover:bg-[#A38559] text-white font-semibold rounded-xl transition-colors shadow-sm"
+                >
+                  {locale === 'nl' ? '📄 Bekijk Car Pass' : '📄 View Car Pass'}
+                </a>
+              </div>
+            )}
 
             {car.status === 'available' && (
               <div className="border-t border-neutral-200 pt-6">

@@ -59,7 +59,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
               {values.map((value) => (
                 <div key={value.key} className="bg-white rounded-3xl p-10 text-center shadow-md border border-neutral-100 hover:shadow-xl transition-shadow">
-                  <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-red-100 text-red-600 mb-8">
+                  <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-[#B5946A]/10 text-[#B5946A] mb-8">
                     <value.icon className="w-10 h-10" />
                   </div>
                   <h3 className="text-xl font-bold text-neutral-900 mb-4">

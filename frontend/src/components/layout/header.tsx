@@ -50,8 +50,8 @@ export function Header({ variant = 'dark' }: HeaderProps) {
     : isDark ? 'text-zinc-400 hover:text-white' : 'text-zinc-600 hover:text-zinc-900'
   
   const navLinkActive = scrolled
-    ? isDark ? 'text-white' : 'text-red-600'
-    : isDark ? 'text-white' : 'text-red-600'
+    ? isDark ? 'text-white' : 'text-[#B5946A]'
+    : isDark ? 'text-white' : 'text-[#B5946A]'
 
   const mobileMenuBtnColor = isDark ? 'text-white' : 'text-zinc-900'
   

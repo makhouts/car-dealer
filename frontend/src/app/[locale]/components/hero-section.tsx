@@ -22,7 +22,7 @@ export function HeroSection() {
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 py-40">
         <div className="max-w-4xl stagger-children">
-          <p className="text-red-500 font-semibold mb-6 tracking-widest text-sm uppercase">Premium Pre-Owned Vehicles</p>
+          <p className="text-[#B5946A] font-semibold mb-6 tracking-widest text-sm uppercase">Premium Pre-Owned Vehicles</p>
           <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold text-white leading-[1.1] mb-8">
             {t('title').split(' ').slice(0, 2).join(' ')} <br />
             <span className="text-zinc-400">{t('title').split(' ').slice(2).join(' ') || 'Dream Car'}</span>
