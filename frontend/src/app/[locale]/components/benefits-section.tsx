@@ -16,7 +16,7 @@ export function BenefitsSection() {
     <section className="py-24 bg-zinc-100" id="about">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="text-center mb-16">
-          <p className="text-red-600 font-medium mb-2">WHY CHOOSE US</p>
+          <p className="text-[#B5946A] font-medium mb-2">WHY CHOOSE US</p>
           <h2 className="text-4xl md:text-5xl font-bold text-zinc-900">{t('title')}</h2>
         </div>
 
