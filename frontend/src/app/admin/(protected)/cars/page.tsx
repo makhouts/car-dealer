@@ -664,6 +664,18 @@ export default function AdminCarsPage() {
                 <Textarea value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} rows={4} required />
               </div>
 
+              {/* Car Pass URL */}
+              <div>
+                <label className="block text-sm font-medium mb-2">Car Pass URL (België)</label>
+                <Input 
+                  type="url" 
+                  value={formData.carPassUrl} 
+                  onChange={(e) => setFormData({ ...formData, carPassUrl: e.target.value })} 
+                  placeholder="https://..." 
+                />
+                <p className="text-xs text-neutral-500 mt-1">Link naar de officiële Car Pass voor Belgische voertuigen</p>
+              </div>
+
               {/* Features */}
               <div>
                 <label className="block text-sm font-medium mb-2">Opties & Features</label>
