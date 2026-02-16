@@ -184,7 +184,7 @@ export function CarDetailContent({ car }: CarDetailContentProps) {
             <div className="mb-6">
               <p className="text-neutral-500">{car.brand}</p>
               <h1 className="text-2xl font-bold text-neutral-900">{car.title}</h1>
-              <p className="text-3xl font-bold text-red-600 font-mono mt-2">
+              <p className="text-3xl font-bold text-[#B5946A] font-mono mt-2">
                 {formatPrice(car.price, locale)}
               </p>
             </div>
