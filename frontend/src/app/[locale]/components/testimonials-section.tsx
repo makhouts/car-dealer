@@ -16,7 +16,7 @@ export function TestimonialsSection() {
     <section className="py-24 bg-zinc-950 noise-overlay">
       <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12">
         <div className="text-center mb-16">
-          <p className="text-red-500 font-medium mb-2">TESTIMONIALS</p>
+          <p className="text-[#B5946A] font-medium mb-2">TESTIMONIALS</p>
           <h2 className="text-4xl md:text-5xl font-bold text-white">{t('title')}</h2>
         </div>
 
@@ -26,7 +26,7 @@ export function TestimonialsSection() {
               key={index}
               className="glass rounded-2xl p-8 relative"
             >
-              <Quote className="w-10 h-10 text-red-500/30 absolute top-6 right-6" />
+              <Quote className="w-10 h-10 text-[#B5946A]/30 absolute top-6 right-6" />
               <div className="flex gap-1 mb-4">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <Star key={i} className="w-4 h-4 fill-yellow-500 text-yellow-500" />
