@@ -34,6 +34,7 @@ interface Car {
   features: string[]
   description: string
   images: string[]
+  carPassUrl?: string
   isFeatured: boolean
   status: string
   soldAt?: string
