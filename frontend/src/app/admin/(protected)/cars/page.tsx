@@ -502,7 +502,7 @@ export default function AdminCarsPage() {
                         </div>
                       </td>
                       <td className="p-4 font-mono">{car.year}</td>
-                      <td className="p-4 font-mono text-red-600">€{car.price.toLocaleString()}</td>
+                      <td className="p-4 font-mono text-[#B5946A] font-semibold">€{car.price.toLocaleString()}</td>
                       <td className="p-4">
                         {/* Quick Status Dropdown */}
                         <div className="relative group">
