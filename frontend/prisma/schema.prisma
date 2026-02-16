@@ -31,6 +31,7 @@ model Car {
   features       String[]
   description    String
   images         String[]
+  carPassUrl     String?  // Belgian Car Pass URL
   isFeatured     Boolean  @default(false)
   status         String   @default("available") // available, reserved, sold
   soldAt         DateTime? // When the car was marked as sold (for auto-delete after 3 days)
