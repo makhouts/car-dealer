@@ -269,6 +269,7 @@ export default function AdminCarsPage() {
         features: formData.features || [],
         description: formData.description,
         images: formData.images || [],
+        carPassUrl: formData.carPassUrl || undefined,
         isFeatured: Boolean(formData.isFeatured),
         status: formData.status,
       }
