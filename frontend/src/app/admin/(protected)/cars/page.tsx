@@ -95,6 +95,7 @@ const emptyCar = {
   features: [] as string[],
   description: '',
   images: [] as string[],
+  carPassUrl: '',
   isFeatured: false,
   status: 'available',
 }
