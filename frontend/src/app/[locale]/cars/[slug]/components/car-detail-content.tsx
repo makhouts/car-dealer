@@ -202,9 +202,9 @@ export function CarDetailContent({ car }: CarDetailContentProps) {
                   href={car.carPassUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center w-full px-6 py-3 bg-[#B5946A] hover:bg-[#A38559] text-white font-semibold rounded-xl transition-colors shadow-sm"
+                  className="inline-flex items-center justify-center w-full px-6 py-3 bg-[#2DB458] hover:bg-[#A38559] text-white font-semibold rounded-xl transition-colors shadow-sm"
                 >
-                  {locale === 'nl' ? '📄 Bekijk Car Pass' : '📄 View Car Pass'}
+                  {locale === 'nl' ? 'Bekijk Car Pass' : 'View Car Pass'}
                 </a>
               </div>
             )}
