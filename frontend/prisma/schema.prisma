@@ -58,6 +58,7 @@ model CarrosserieLead {
   email         String
   phone         String
   chassisNumber String   // VIN/Chassis number
+  serviceType   String   // onderhoud, herstelling, andere
   message       String?
   handled       Boolean  @default(false)
   createdAt     DateTime @default(now())
