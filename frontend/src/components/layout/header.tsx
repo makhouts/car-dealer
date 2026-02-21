@@ -27,6 +27,7 @@ export function Header({ variant = 'dark' }: HeaderProps) {
   const navLinks = [
     { href: '/', label: t('home') },
     { href: '/cars', label: t('inventory') },
+    { href: '/carrosserie', label: locale === 'nl' ? 'Carrosserie' : 'Body Shop' },
     { href: '/about', label: t('about') },
     { href: '/contact', label: t('contact') },
   ]
