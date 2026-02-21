@@ -5,6 +5,7 @@ import { useLocale } from 'next-intl'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { toast } from 'sonner'
 
 export function CarrosserieForm() {
@@ -14,10 +15,17 @@ export function CarrosserieForm() {
     email: '',
     phone: '',
     chassisNumber: '',
+    serviceType: '',
     message: '',
     honeypot: '',
   })
   const [submitting, setSubmitting] = useState(false)
+
+  const serviceTypes = [
+    { value: 'onderhoud', label: locale === 'nl' ? 'Onderhoud' : 'Maintenance' },
+    { value: 'herstelling', label: locale === 'nl' ? 'Herstelling' : 'Repair' },
+    { value: 'andere', label: locale === 'nl' ? 'Andere' : 'Other' },
+  ]
 
   const t = {
     title: locale === 'nl' ? 'Vraag een offerte aan' : 'Request a quote',
