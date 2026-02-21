@@ -225,6 +225,15 @@ export default function AdminCarrosserieLeadsPage() {
                       <Car className="w-4 h-4 text-neutral-400" />
                       <span className="font-semibold">{lead.chassisNumber}</span>
                     </div>
+                    <div className="flex items-center gap-3">
+                      <Wrench className="w-4 h-4 text-neutral-400" />
+                      <span className="px-3 py-1 rounded-full text-xs font-semibold bg-[#B5946A]/10 text-[#B5946A] capitalize">
+                        {lead.serviceType}
+                      </span>
+                    </div>
+                  </div>
+                      <span className="font-semibold">{lead.chassisNumber}</span>
+                    </div>
                   </div>
 
                   {lead.message && (
