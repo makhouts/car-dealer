@@ -146,6 +146,24 @@ export function CarrosserieForm() {
 
         <div>
           <label className="block text-sm font-medium text-neutral-700 mb-2">
+            {t.serviceType} *
+          </label>
+          <Select value={formData.serviceType} onValueChange={(value) => setFormData({ ...formData, serviceType: value })} required>
+            <SelectTrigger className="h-12">
+              <SelectValue placeholder={t.serviceTypePlaceholder} />
+            </SelectTrigger>
+            <SelectContent>
+              {serviceTypes.map((type) => (
+                <SelectItem key={type.value} value={type.value}>
+                  {type.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-neutral-700 mb-2">
             {t.chassisNumber} *
           </label>
           <Input
