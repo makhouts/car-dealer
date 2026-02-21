@@ -71,6 +71,7 @@ export function CarrosserieForm() {
           email: '',
           phone: '',
           chassisNumber: '',
+          serviceType: '',
           message: '',
           honeypot: '',
         })
