@@ -20,8 +20,8 @@ export function ContactInfo() {
       <div className="space-y-8">
         {contactItems.map((item, index) => (
           <div key={index} className="flex gap-4">
-            <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center flex-shrink-0">
-              <item.icon className="w-6 h-6 text-red-600" />
+            <div className="w-12 h-12 bg-[#B5946A]/10 rounded-xl flex items-center justify-center flex-shrink-0">
+              <item.icon className="w-6 h-6 text-[#B5946A]" />
             </div>
             <div>
               <p className="text-sm text-neutral-500 mb-1">{item.label}</p>
