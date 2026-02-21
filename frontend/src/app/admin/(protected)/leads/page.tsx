@@ -40,7 +40,7 @@ export default function AdminLeadsPage() {
         fetch('/api/leads?filter=new'),
         fetch('/api/leads?filter=handled'),
       ])
-      
+
       if (allRes.ok && newRes.ok && handledRes.ok) {
         const [all, newLeads, handled] = await Promise.all([
           allRes.json(),
@@ -137,11 +137,10 @@ export default function AdminLeadsPage() {
                 <button
                   key={tab.key}
                   onClick={() => setFilter(tab.key)}
-                  className={`flex items-center gap-2 px-4 py-3 rounded-xl font-medium transition-all ${
-                    isActive
-                      ? 'bg-white shadow-sm text-neutral-900'
-                      : 'bg-transparent text-neutral-500 hover:bg-white/50'
-                  }`}
+                  className={`flex items-center gap-2 px-4 py-3 rounded-xl font-medium transition-all ${isActive
+                    ? 'bg-white shadow-sm text-neutral-900'
+                    : 'bg-transparent text-neutral-500 hover:bg-white/50'
+                    }`}
                 >
                   <Icon className={`w-5 h-5 ${isActive ? 'text-neutral-700' : ''}`} />
                   <span>{tab.label}</span>
@@ -175,7 +174,7 @@ export default function AdminLeadsPage() {
                         <div className="flex items-center gap-3 mb-1">
                           <h3 className="font-semibold text-neutral-900">{lead.name}</h3>
                           {!lead.handled && (
-                            <span className="px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700 animate-pulse">
+                            <span className="px-3 py-1 rounded-full text-xs font-bold bg-[#B5946A] text-white animate-pulse">
                               Nieuw
                             </span>
                           )}
@@ -184,16 +183,15 @@ export default function AdminLeadsPage() {
                           <Clock className="w-3.5 h-3.5" />
                           <span>{formatDate(lead.createdAt)}</span>
                           <span className="text-neutral-400">•</span>
-                          <span className={!lead.handled ? 'text-red-600 font-medium' : ''}>{getTimeAgo(lead.createdAt)}</span>
+                          <span className={!lead.handled ? 'text-[#B5946A] font-medium' : ''}>{getTimeAgo(lead.createdAt)}</span>
                         </div>
                       </div>
                       <button
                         onClick={() => toggleHandled(lead.id, !lead.handled)}
-                        className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                          lead.handled
-                            ? 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
-                            : 'bg-green-500 text-white hover:bg-green-600 shadow-sm'
-                        }`}
+                        className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${lead.handled
+                          ? 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
+                          : 'bg-green-500 text-white hover:bg-green-600 shadow-sm'
+                          }`}
                       >
                         <CheckCircle2 className="w-4 h-4" />
                         {lead.handled ? 'Markeer als Nieuw' : 'Markeer als Afgehandeld'}
@@ -201,16 +199,16 @@ export default function AdminLeadsPage() {
                     </div>
 
                     <div className="flex flex-wrap gap-4 text-sm mb-3">
-                      <a 
-                        href={`mailto:${lead.email}`} 
+                      <a
+                        href={`mailto:${lead.email}`}
                         className="flex items-center gap-1.5 text-neutral-600 hover:text-neutral-900 transition-colors"
                       >
                         <Mail className="w-4 h-4" />
                         {lead.email}
                       </a>
                       {lead.phone && (
-                        <a 
-                          href={`tel:${lead.phone}`} 
+                        <a
+                          href={`tel:${lead.phone}`}
                           className="flex items-center gap-1.5 text-neutral-600 hover:text-neutral-900 transition-colors"
                         >
                           <Phone className="w-4 h-4" />
@@ -224,12 +222,12 @@ export default function AdminLeadsPage() {
                     </div>
 
                     {lead.car && (
-                      <a 
+                      <a
                         href={`/admin/cars`}
                         className="inline-flex items-center gap-2 text-sm text-neutral-500 hover:text-neutral-700 transition-colors"
                       >
                         <Car className="w-4 h-4" />
-                        Geïnteresseerd in: 
+                        Geïnteresseerd in:
                         <span className="font-medium text-neutral-700">
                           {lead.car.title || `${lead.car.brand} ${lead.car.model}`}
                         </span>

@@ -93,9 +93,9 @@ export default function AdminCarrosserieLeadsPage() {
   }
 
   const filters = [
-    { key: 'all' as FilterType, label: 'Alle Aanvragen', count: counts.all, color: 'text-neutral-600 bg-neutral-50' },
     { key: 'new' as FilterType, label: 'Nieuwe Aanvragen', count: counts.new, color: 'text-[#B5946A] bg-[#B5946A]/10' },
     { key: 'handled' as FilterType, label: 'Afgehandeld', count: counts.handled, color: 'text-green-600 bg-green-50' },
+    { key: 'all' as FilterType, label: 'Alle Aanvragen', count: counts.all, color: 'text-neutral-600 bg-neutral-50' }
   ]
 
   const getTimeAgo = (dateString: string) => {
@@ -113,10 +113,16 @@ export default function AdminCarrosserieLeadsPage() {
     return `${diffDays} dagen geleden`
   }
 
+  const handleCopy = (lead: CarrosserieLead) => {
+    if (lead.chassisNumber == null) return
+    navigator.clipboard.writeText(lead.chassisNumber)
+    toast.success('Gekopieerd naar klembord')
+  }
+
   return (
     <div className="min-h-screen bg-neutral-50 flex">
       <AdminSidebar />
-      
+
       <main className="flex-1 p-8 ml-64">
         <div className="max-w-7xl mx-auto">
           <div className="mb-8">
@@ -133,17 +139,15 @@ export default function AdminCarrosserieLeadsPage() {
               <button
                 key={f.key}
                 onClick={() => setFilter(f.key)}
-                className={`flex items-center gap-3 px-6 py-3 rounded-xl transition-all ${
-                  filter === f.key
-                    ? `${f.color} shadow-sm`
-                    : 'bg-white hover:bg-neutral-50 text-neutral-600'
-                }`}
+                className={`flex items-center gap-3 px-6 py-3 rounded-xl transition-all ${filter === f.key
+                  ? `${f.color} shadow-sm`
+                  : 'bg-white hover:bg-neutral-50 text-neutral-600'
+                  }`}
               >
                 <Filter className="w-5 h-5" />
                 <span className="font-medium">{f.label}</span>
-                <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${
-                  filter === f.key ? 'bg-white/50' : 'bg-neutral-100'
-                }`}>
+                <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${filter === f.key ? 'bg-white/50' : 'bg-neutral-100'
+                  }`}>
                   {f.count}
                 </span>
               </button>
@@ -165,9 +169,8 @@ export default function AdminCarrosserieLeadsPage() {
               {filteredLeads.map((lead) => (
                 <div
                   key={lead.id}
-                  className={`bg-white rounded-2xl p-6 shadow-sm border-2 transition-all hover:shadow-md ${
-                    !lead.handled ? 'border-[#B5946A]/20' : 'border-transparent'
-                  }`}
+                  className={`bg-white rounded-2xl p-6 shadow-sm border-2 transition-all hover:shadow-md ${!lead.handled ? 'border-[#B5946A]/20' : 'border-transparent'
+                    }`}
                 >
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex-1">
@@ -188,11 +191,10 @@ export default function AdminCarrosserieLeadsPage() {
                     <div className="flex gap-2">
                       <button
                         onClick={() => handleToggleHandled(lead.id, lead.handled)}
-                        className={`p-2 rounded-lg transition-colors ${
-                          lead.handled
-                            ? 'text-neutral-500 hover:text-neutral-700 hover:bg-neutral-100'
-                            : 'text-green-600 hover:text-green-700 hover:bg-green-50'
-                        }`}
+                        className={`p-2 rounded-lg transition-colors ${lead.handled
+                          ? 'text-neutral-500 hover:text-neutral-700 hover:bg-neutral-100'
+                          : 'text-green-600 hover:text-green-700 hover:bg-green-50'
+                          }`}
                         title={lead.handled ? 'Markeer als nieuw' : 'Markeer als afgehandeld'}
                       >
                         {lead.handled ? <X className="w-5 h-5" /> : <Check className="w-5 h-5" />}
@@ -221,7 +223,7 @@ export default function AdminCarrosserieLeadsPage() {
                       </a>
                     </div>
                     <div className="flex items-center gap-3 text-neutral-700 font-mono">
-                      <Car className="w-4 h-4 text-neutral-400" />
+                      <Car onClick={() => handleCopy(lead)} className="w-4 h-4 text-neutral-400 cursor-pointer" />
                       <span className="font-semibold">{lead.chassisNumber}</span>
                     </div>
                   </div>
