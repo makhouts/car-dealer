@@ -35,6 +35,15 @@ export const leadSchema = z.object({
   honeypot: z.string().max(0).optional(), // Anti-spam honeypot
 })
 
+export const carrosserieLeadSchema = z.object({
+  name: z.string().min(1, 'Name is required'),
+  email: z.string().email('Invalid email address'),
+  phone: z.string().min(1, 'Phone is required'),
+  chassisNumber: z.string().min(1, 'Chassis number is required'),
+  message: z.string().optional(),
+  honeypot: z.string().max(0).optional(), // Anti-spam honeypot
+})
+
 export const loginSchema = z.object({
   username: z.string().min(1, 'Username is required'),
   password: z.string().min(1, 'Password is required'),
@@ -42,4 +51,5 @@ export const loginSchema = z.object({
 
 export type CarInput = z.infer<typeof carSchema>
 export type LeadInput = z.infer<typeof leadSchema>
+export type CarrosserieLeadInput = z.infer<typeof carrosserieLeadSchema>
 export type LoginInput = z.infer<typeof loginSchema>
