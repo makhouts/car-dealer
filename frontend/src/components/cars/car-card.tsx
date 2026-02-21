@@ -72,13 +72,6 @@ export function CarCard({ car, variant = 'light' }: CarCardProps) {
               {tCommon(car.status)}
             </span>
           )}
-          
-          {/* Featured Badge */}
-          {car.isFeatured && car.status === 'available' && (
-            <span className="absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-medium bg-red-600 text-white">
-              {tCommon('featured')}
-            </span>
-          )}
         </div>
 
         {/* Content */}
