@@ -38,6 +38,8 @@ export function CarrosserieForm() {
     emailPlaceholder: locale === 'nl' ? 'uw.email@voorbeeld.nl' : 'your.email@example.com',
     phone: locale === 'nl' ? 'Telefoonnummer' : 'Phone number',
     phonePlaceholder: locale === 'nl' ? '+32 123 45 67 89' : '+32 123 45 67 89',
+    serviceType: locale === 'nl' ? 'Type dienst' : 'Service type',
+    serviceTypePlaceholder: locale === 'nl' ? 'Selecteer type dienst' : 'Select service type',
     chassisNumber: locale === 'nl' ? 'Chassisnummer (VIN)' : 'Chassis Number (VIN)',
     chassisPlaceholder: locale === 'nl' ? 'Bijv. WBA12345678901234' : 'E.g. WBA12345678901234',
     message: locale === 'nl' ? 'Bericht (optioneel)' : 'Message (optional)',
