@@ -40,6 +40,7 @@ export const carrosserieLeadSchema = z.object({
   email: z.string().email('Invalid email address'),
   phone: z.string().min(1, 'Phone is required'),
   chassisNumber: z.string().min(1, 'Chassis number is required'),
+  serviceType: z.string().min(1, 'Service type is required'),
   message: z.string().optional(),
   honeypot: z.string().max(0).optional(), // Anti-spam honeypot
 })

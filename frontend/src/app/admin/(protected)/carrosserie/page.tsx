@@ -12,6 +12,7 @@ interface CarrosserieLead {
   email: string
   phone: string
   chassisNumber: string
+  serviceType: string
   message?: string
   handled: boolean
   createdAt: string
@@ -224,6 +225,15 @@ export default function AdminCarrosserieLeadsPage() {
                     </div>
                     <div className="flex items-center gap-3 text-neutral-700 font-mono">
                       <Car onClick={() => handleCopy(lead)} className="w-4 h-4 text-neutral-400 cursor-pointer" />
+                      <span className="font-semibold">{lead.chassisNumber}</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <Wrench className="w-4 h-4 text-neutral-400" />
+                      <span className="px-3 py-1 rounded-full text-xs font-semibold bg-[#B5946A]/10 text-[#B5946A] capitalize">
+                        {lead.serviceType}
+                      </span>
+                    </div>
+                  </div>
                       <span className="font-semibold">{lead.chassisNumber}</span>
                     </div>
                   </div>

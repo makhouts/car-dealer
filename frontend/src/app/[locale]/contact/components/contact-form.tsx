@@ -94,7 +94,12 @@ export function ContactForm() {
           />
         </div>
 
-        <Button type="submit" disabled={submitting} size="lg" variant="accent">
+        <Button 
+          type="submit" 
+          disabled={submitting} 
+          size="lg" 
+          className="bg-[#B5946A] hover:bg-[#A38559] text-white"
+        >
           {submitting ? t('form.sending') : t('form.submit')}
         </Button>
       </form>

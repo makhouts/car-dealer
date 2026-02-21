@@ -5,6 +5,7 @@ import { useLocale } from 'next-intl'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { toast } from 'sonner'
 
 export function CarrosserieForm() {
@@ -14,10 +15,17 @@ export function CarrosserieForm() {
     email: '',
     phone: '',
     chassisNumber: '',
+    serviceType: '',
     message: '',
     honeypot: '',
   })
   const [submitting, setSubmitting] = useState(false)
+
+  const serviceTypes = [
+    { value: 'onderhoud', label: locale === 'nl' ? 'Onderhoud' : 'Maintenance' },
+    { value: 'herstelling', label: locale === 'nl' ? 'Herstelling' : 'Repair' },
+    { value: 'andere', label: locale === 'nl' ? 'Andere' : 'Other' },
+  ]
 
   const t = {
     title: locale === 'nl' ? 'Vraag een offerte aan' : 'Request a quote',
@@ -30,6 +38,8 @@ export function CarrosserieForm() {
     emailPlaceholder: locale === 'nl' ? 'uw.email@voorbeeld.nl' : 'your.email@example.com',
     phone: locale === 'nl' ? 'Telefoonnummer' : 'Phone number',
     phonePlaceholder: locale === 'nl' ? '+32 123 45 67 89' : '+32 123 45 67 89',
+    serviceType: locale === 'nl' ? 'Type dienst' : 'Service type',
+    serviceTypePlaceholder: locale === 'nl' ? 'Selecteer type dienst' : 'Select service type',
     chassisNumber: locale === 'nl' ? 'Chassisnummer (VIN)' : 'Chassis Number (VIN)',
     chassisPlaceholder: locale === 'nl' ? 'Bijv. WBA12345678901234' : 'E.g. WBA12345678901234',
     message: locale === 'nl' ? 'Bericht (optioneel)' : 'Message (optional)',
@@ -61,6 +71,7 @@ export function CarrosserieForm() {
           email: '',
           phone: '',
           chassisNumber: '',
+          serviceType: '',
           message: '',
           honeypot: '',
         })
@@ -131,6 +142,24 @@ export function CarrosserieForm() {
             required
             className="h-12"
           />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-neutral-700 mb-2">
+            {t.serviceType} *
+          </label>
+          <Select value={formData.serviceType} onValueChange={(value) => setFormData({ ...formData, serviceType: value })} required>
+            <SelectTrigger className="h-12">
+              <SelectValue placeholder={t.serviceTypePlaceholder} />
+            </SelectTrigger>
+            <SelectContent>
+              {serviceTypes.map((type) => (
+                <SelectItem key={type.value} value={type.value}>
+                  {type.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
 
         <div>
