@@ -12,6 +12,7 @@ interface CarrosserieLead {
   email: string
   phone: string
   chassisNumber: string
+  serviceType: string
   message?: string
   handled: boolean
   createdAt: string
