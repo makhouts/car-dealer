@@ -52,6 +52,17 @@ model Lead {
   createdAt DateTime @default(now())
 }
 
+model CarrosserieLead {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  email         String
+  phone         String
+  chassisNumber String   // VIN/Chassis number
+  message       String?
+  handled       Boolean  @default(false)
+  createdAt     DateTime @default(now())
+}
+
 model Admin {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   username     String   @unique
