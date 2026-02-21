@@ -53,4 +53,5 @@ export const loginSchema = z.object({
 export type CarInput = z.infer<typeof carSchema>
 export type LeadInput = z.infer<typeof leadSchema>
 export type CarrosserieLeadInput = z.infer<typeof carrosserieLeadSchema>
+export type CarrosserieLeadInput = z.infer<typeof carrosserieLeadSchema>
 export type LoginInput = z.infer<typeof loginSchema>

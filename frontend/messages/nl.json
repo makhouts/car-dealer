@@ -36,7 +36,8 @@
     "home": "Home",
     "inventory": "Aanbod",
     "about": "Over Ons",
-    "contact": "Contact"
+    "contact": "Contact",
+    "carrosserie": "Carrosserie"
   },
   "hero": {
     "title": "Vind Uw Droomauto",
@@ -198,6 +199,52 @@
       "emailValue": "info@carcity.be",
       "hours": "Openingstijden",
       "hoursValue": "Ma - Vr: 09:00 - 18:00\nZa: 10:00 - 16:00\nZo: Gesloten"
+    }
+  },
+  "carrosserie": {
+    "title": "Carrosserie & Herstellingen",
+    "subtitle": "Professioneel onderhoud en herstellingen voor uw voertuig",
+    "hero": {
+      "badge": "Carrosserie Diensten",
+      "title": "Uw Wagen in Perfecte Staat",
+      "description": "Van kleine deukjes tot grote schadeherstellingen — ons team van ervaren carrosserie­specialisten staat voor u klaar. Wij werken nauwkeurig, snel en met kwaliteits­materialen."
+    },
+    "services": {
+      "title": "Onze Diensten",
+      "dent": {
+        "title": "Deuk- & Krasherstellingen",
+        "description": "Kleine tot middelgrote deuken en krassen worden vakkundig hersteld, zodat uw wagen er als nieuw uitziet."
+      },
+      "paint": {
+        "title": "Spuitwerk & Lakwerk",
+        "description": "Perfecte kleurmatching en hoogwaardige lak­behandeling voor een onberispelijk resultaat."
+      },
+      "frame": {
+        "title": "Chassis & Structuur",
+        "description": "Correctie van chassis­vervormingen na een ongeval, met behulp van moderne meetapparatuur."
+      },
+      "glass": {
+        "title": "Ruit­vervanging",
+        "description": "Vervanging van beschadigde voor­ruiten, zij­ruiten en achter­ruiten met originele onderdelen."
+      }
+    },
+    "form": {
+      "title": "Offerte of Afspraak Aanvragen",
+      "subtitle": "Vul het formulier in en wij nemen zo snel mogelijk contact met u op.",
+      "name": "Naam",
+      "namePlaceholder": "Uw volledige naam",
+      "email": "E-mail",
+      "emailPlaceholder": "uw@email.com",
+      "phone": "Telefoon",
+      "phonePlaceholder": "+32 XXX XX XX XX",
+      "chassisNumber": "Chassisnummer (VIN)",
+      "chassisNumberPlaceholder": "Optioneel — bv. VF1RFD...",
+      "message": "Beschrijf het probleem",
+      "messagePlaceholder": "Beschrijf de schade of het gewenste onderhoud...",
+      "submit": "Aanvraag Versturen",
+      "sending": "Verzenden...",
+      "success": "Bedankt! Wij nemen zo snel mogelijk contact met u op.",
+      "error": "Er is iets misgegaan. Probeer het later opnieuw."
     }
   },
   "about": {

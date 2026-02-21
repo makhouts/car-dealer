@@ -36,7 +36,8 @@
     "home": "Home",
     "inventory": "Inventory",
     "about": "About Us",
-    "contact": "Contact"
+    "contact": "Contact",
+    "carrosserie": "Bodywork"
   },
   "hero": {
     "title": "Find Your Dream Car",
@@ -198,6 +199,52 @@
       "emailValue": "info@carcity.be",
       "hours": "Opening Hours",
       "hoursValue": "Mon - Fri: 09:00 - 18:00\nSat: 10:00 - 16:00\nSun: Closed"
+    }
+  },
+  "carrosserie": {
+    "title": "Bodywork & Repairs",
+    "subtitle": "Professional maintenance and repairs for your vehicle",
+    "hero": {
+      "badge": "Bodywork Services",
+      "title": "Your Car in Perfect Condition",
+      "description": "From minor dents to major collision repairs — our team of experienced bodywork specialists is here for you. We work accurately, quickly and with quality materials."
+    },
+    "services": {
+      "title": "Our Services",
+      "dent": {
+        "title": "Dent & Scratch Repairs",
+        "description": "Small to medium dents and scratches are professionally repaired, making your car look like new."
+      },
+      "paint": {
+        "title": "Paintwork & Lacquering",
+        "description": "Perfect colour matching and high-quality paint treatment for an impeccable result."
+      },
+      "frame": {
+        "title": "Chassis & Structure",
+        "description": "Correction of chassis deformations after an accident, using modern measuring equipment."
+      },
+      "glass": {
+        "title": "Windscreen Replacement",
+        "description": "Replacement of damaged windscreens, side windows and rear windows with original parts."
+      }
+    },
+    "form": {
+      "title": "Request a Quote or Appointment",
+      "subtitle": "Fill in the form and we will contact you as soon as possible.",
+      "name": "Name",
+      "namePlaceholder": "Your full name",
+      "email": "Email",
+      "emailPlaceholder": "your@email.com",
+      "phone": "Phone",
+      "phonePlaceholder": "+32 XXX XX XX XX",
+      "chassisNumber": "Chassis Number (VIN)",
+      "chassisNumberPlaceholder": "Optional — e.g. VF1RFD...",
+      "message": "Describe the problem",
+      "messagePlaceholder": "Describe the damage or desired maintenance...",
+      "submit": "Send Request",
+      "sending": "Sending...",
+      "success": "Thank you! We will contact you as soon as possible.",
+      "error": "Something went wrong. Please try again later."
     }
   },
   "about": {

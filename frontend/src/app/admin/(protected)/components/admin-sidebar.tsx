@@ -21,7 +21,7 @@ export function AdminSidebar() {
         if (leadsRes.ok && carrosserieRes.ok) {
           const leads = await leadsRes.json()
           const carrosserie = await carrosserieRes.json()
-          
+
           setLeadCounts({
             leads: leads.filter((l: any) => !l.handled).length,
             carrosserie: carrosserie.filter((l: any) => !l.handled).length,
