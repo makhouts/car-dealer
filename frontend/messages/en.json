@@ -191,9 +191,9 @@
     },
     "info": {
       "address": "Address",
-      "addressValue": "Example Street 123\n1000 Brussels\nBelgium",
+      "addressValue": "Boomsesteenweg 95\n2610 Antwerpen\nBelgium",
       "phone": "Phone",
-      "phoneValue": "+32 123 45 67 89",
+      "phoneValue": "+323 828 98 00",
       "email": "Email",
       "emailValue": "info@carcity.be",
       "hours": "Opening Hours",

@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { LayoutDashboard, Car, MessageSquare, LogOut } from 'lucide-react'
+import { LayoutDashboard, Car, MessageSquare, LogOut, ExternalLink } from 'lucide-react'
 
 export function AdminSidebar() {
   const pathname = usePathname()
@@ -33,11 +33,10 @@ export function AdminSidebar() {
             <Link
               key={item.href}
               href={item.href}
-              className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
-                isActive
-                  ? 'bg-white/10 text-white'
-                  : 'text-neutral-400 hover:text-white hover:bg-white/5'
-              }`}
+              className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive
+                ? 'bg-white/10 text-white'
+                : 'text-neutral-400 hover:text-white hover:bg-white/5'
+                }`}
             >
               <item.icon className="w-5 h-5" />
               {item.label}
@@ -46,13 +45,23 @@ export function AdminSidebar() {
         })}
       </nav>
 
-      <button
-        onClick={handleLogout}
-        className="flex items-center gap-3 px-4 py-3 rounded-lg text-red-400 hover:text-red-300 hover:bg-red-950/30 transition-colors"
-      >
-        <LogOut className="w-5 h-5" />
-        Logout
-      </button>
+      <div className="space-y-2">
+        <Link
+          href="/"
+          className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:text-white hover:bg-white/5 transition-colors"
+        >
+          <ExternalLink className="w-5 h-5" />
+          Home
+        </Link>
+
+        <button
+          onClick={handleLogout}
+          className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-red-400 hover:text-red-300 hover:bg-red-950/30 transition-colors"
+        >
+          <LogOut className="w-5 h-5" />
+          Logout
+        </button>
+      </div>
     </aside>
   )
 }
