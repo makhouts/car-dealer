@@ -234,10 +234,6 @@ export default function AdminCarrosserieLeadsPage() {
                       </span>
                     </div>
                   </div>
-                      <span className="font-semibold">{lead.chassisNumber}</span>
-                    </div>
-                  </div>
-
                   {lead.message && (
                     <div className="bg-neutral-50 rounded-xl p-4 border border-neutral-100">
                       <div className="flex items-start gap-2 text-neutral-700">
