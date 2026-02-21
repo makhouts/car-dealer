@@ -34,7 +34,7 @@ export function CarCard({ car, variant = 'light' }: CarCardProps) {
                 <p className="text-zinc-500 text-sm">{car.brand}</p>
                 <h3 className="text-xl font-semibold text-white">{car.model}</h3>
               </div>
-              <span className="text-red-500 font-mono font-medium">
+              <span className="text-[#B5946A] font-mono font-medium">
                 {formatPrice(car.price, locale)}
               </span>
             </div>
@@ -46,7 +46,7 @@ export function CarCard({ car, variant = 'light' }: CarCardProps) {
               <span>{t(`fuelTypes.${car.fuelType}`)}</span>
             </div>
           </div>
-          <div className="absolute inset-0 border-2 border-transparent group-hover:border-red-500/30 rounded-xl transition-all duration-500 pointer-events-none" />
+          <div className="absolute inset-0 border-2 border-transparent group-hover:border-[#B5946A]/30 rounded-xl transition-all duration-500 pointer-events-none" />
         </article>
       </Link>
     )
@@ -78,12 +78,12 @@ export function CarCard({ car, variant = 'light' }: CarCardProps) {
         <div className="p-5">
           <div className="flex items-start justify-between mb-1">
             <p className="text-sm text-neutral-500">{car.brand}</p>
-            <span className="text-lg font-bold text-red-600 font-mono">
+            <span className="text-lg font-bold text-[#B5946A] font-mono">
               {formatPrice(car.price, locale)}
             </span>
           </div>
           
-          <h3 className="text-lg font-semibold text-neutral-900 mb-3 group-hover:text-red-600 transition-colors">
+          <h3 className="text-lg font-semibold text-neutral-900 mb-3 group-hover:text-[#B5946A] transition-colors">
             {car.title || `${car.model} ${car.year}`}
           </h3>
           
